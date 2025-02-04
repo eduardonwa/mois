@@ -1,0 +1,48 @@
+---
+import type { SanityDocument } from "@sanity/client";
+import { loadQuery } from "../../../sanity/lib/load-query";
+import { postQuery } from '../../lib/queries';
+import { isDraftMode } from "../../lib/draftMode";
+
+import PortableText from "../../components/PortableText.astro";
+import Layout from "../../layouts/Layout.astro";
+
+const serverDraftMode = isDraftMode(Astro.request);
+const visualEditingEnabled = import.meta.env.PUBLIC_SANITY_VISUAL_EDITING_ENABLED === "true";
+
+export async function getStaticPaths() {
+  const { data: posts } = await loadQuery<SanityDocument[]>({
+    query: `*[_type == "post"]`,
+  });
+
+  return posts.map(({ slug }) => {
+    return {
+      params: {
+        slug: slug.current,
+      },
+    };
+  });
+}
+
+const { data: post, perspective  } = await loadQuery({
+  query: postQuery,
+  params: { slug: Astro.params.slug },
+  perspective: serverDraftMode ? "previewDrafts" : "published",
+  visualEditingEnabled
+});
+
+// si no hay post y no estamos viendo un borrador
+if (!post && !serverDraftMode) {
+  return Astro.redirect('/api/draft-mode/disable');
+}
+
+// si el post no existe
+if (!post) {
+  return Astro.redirect('/404');
+}
+---
+
+<Layout>
+  <h1>A post about {post.title}</h1>
+  <PortableText portableText={post.body} />
+</Layout>
