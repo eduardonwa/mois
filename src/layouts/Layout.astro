@@ -1,8 +1,36 @@
 ---
 import { VisualEditing } from "@sanity/astro/visual-editing";
+import { loadQuery } from "../../sanity/lib/load-query";
+import { settingsQuery } from "../lib/queries";
+import { urlForImage } from "../../sanity/lib/url-for-image"
 
 const visualEditingEnabled =
   import.meta.env.PUBLIC_SANITY_VISUAL_EDITING_ENABLED == "true";
+
+const { data: settings  } = await loadQuery({
+	query: settingsQuery,
+	params: {},
+});
+
+const metadata = {
+    title: settings[0].title || "",
+    description: settings[0].description || "",
+    ogImage: settings[0]?.ogImage
+        ? {
+            alt: settings[0].ogImage.alt || "",
+            baseUrl: settings[0].ogImage.baseUrl || "",
+            url: settings[0].ogImage.ogImageUrl
+                ? urlForImage(settings[0].ogImage.ogImageUrl)
+                    .width(1200)
+                    .height(627)
+                    .fit("crop")
+                    .url()
+                : "/public/404.png",
+        } : {
+            alt: "Imagen por defecto",
+            url: "/public/404.png",
+        }
+};
 ---
 
 <!doctype html>
@@ -10,6 +38,18 @@ const visualEditingEnabled =
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
+		<meta name="title" content={metadata.title}>
+		<meta name="description" content={metadata.description}>
+		{metadata.ogImage && (
+			<link rel="canonical" href={metadata.ogImage.baseUrl}>
+			<meta property="og:url" content={metadata.ogImage.baseUrl}>
+			<meta property="og:image" content={metadata.ogImage.url}>
+			<meta property="og:image:alt" content={metadata.ogImage.alt}>
+			<meta property="og:image:width" content="1200">
+			<meta property="og:image:height" content="627">
+		)}
+		<meta property="og:title" content={metadata.title}>
+		<meta property="og:description" content={metadata.description}>
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
 		<title>Astro Basics</title>

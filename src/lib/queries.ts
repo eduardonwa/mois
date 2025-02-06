@@ -1,5 +1,45 @@
 import groq from 'groq';
 
+const linkReference = /* groq */ `
+  _type == "link" => {
+    "page": page->slug.current,
+    "post": post->slug.current
+  }
+`;
+
+const linkFields = /* groq */ `
+  link {
+    ...,
+    ${linkReference}
+  }
+`;
+
+export const pageQuery = groq`
+  *[_type == "page" && slug.current == $slug][0] {
+    _id,
+    _type,
+    name,
+    slug,
+    heading,
+    subheading,
+    "pageBuilder": pageBuilder[]{
+      ...,
+      _type == "callToAction" => {
+        ${linkFields},
+      },
+      _type == "infoSection" => {
+        content[] {
+          ...,
+          markDefs[]{
+            ...,
+            ${linkReference}
+          }
+        }
+      },
+    },
+  }
+`;
+
 export const postQuery = groq`
   *[_type == "post" && slug.current == $slug][0] {
     title,
@@ -15,12 +55,27 @@ export const postQuery = groq`
     body[] {
       ...,
       _type == "image" => {
-        ...,
-        asset-> {
-          ...,
-          url
+      "imageUrl": asset->url,
+        ...metadata {
+          lqip,
+          ...dimensions {
+            width,
+            height
+          }
         }
       }
     }
   }
-`
+`;
+
+export const settingsQuery = groq`
+  *[_type == "settings"] {
+    title,
+    description,
+    ogImage {
+      alt,
+      baseUrl,
+      "ogImageUrl": asset-> url
+    }
+  }
+`;

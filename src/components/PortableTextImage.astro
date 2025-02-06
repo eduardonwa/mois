@@ -1,15 +1,25 @@
 ---
 import { urlForImage } from "../../sanity/lib/url-for-image";
 
-const { asset, alt } = Astro.props.node;
+const { asset, alt, crop, hotspot } = Astro.props.node;
 
 // si no encuentra una imagen
 if (!asset) {
   return null;
 }
 
-const url = urlForImage(asset).url();
-const webpUrl = urlForImage(asset).format("webp").url();
+const imageObject = { asset, crop, hotspot };
+
+const url = urlForImage(imageObject)
+  .width(1080)
+  .height(720)
+  .url();
+
+const webpUrl = urlForImage(imageObject)
+  .width(1080)
+  .height(720)
+  .format("webp")
+  .url();
 ---
 
 <picture>
