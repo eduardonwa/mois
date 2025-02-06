@@ -1,3 +1,20 @@
 ---
+const { buttonText = "", heading = "", link = {} } = Astro.props;
 
+import Link from "./Link.astro";
 ---
+
+<style>
+    .mi-clase {
+        background-color: black;
+        padding: 14px;
+        color: white;
+    }
+</style>
+
+<div>
+    <h1>{heading}</h1>
+    <Link link={link} class="mi-clase">
+        {buttonText && buttonText}
+    </Link>
+</div>

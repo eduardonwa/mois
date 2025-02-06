@@ -1,0 +1,31 @@
+---
+import { linkResolver } from "../../lib/linkResolver";
+
+interface Props {
+  link: {
+    linkType?: "href" | "page" | "post";
+    href?: string;
+    page?: string;
+    post?: string;
+    openInNewTab?: boolean;
+  };
+}
+
+const { link, ...rest } = Astro.props;
+
+const url = linkResolver(link); // linkResolver obtiene la URL
+const linkAttributes = {
+     href: url,
+     ...rest, // Esto sobrescribirá target y rel si se proporcionan en rest
+     ...(link.openInNewTab ? { target: "_blank", rel: "noopener noreferrer" } : {}), // agregamos opciones para abrir en una nueva pestaña si el enlace los incluye
+   };
+
+if (url === null) {
+  return; // Puedes retornar un fragmento vacío o un mensaje de error
+}
+---
+
+<a {...linkAttributes}>
+  <slot />
+</a>
+

@@ -3,6 +3,7 @@ import type { SanityDocument } from "@sanity/client";
 import { loadQuery } from "../../sanity/lib/load-query";
 import { pageQuery } from "../lib/queries";
 import { isDraftMode } from "../lib/draftMode";
+import { blockComponents } from "../components/block";
 
 import Layout from "../layouts/Layout.astro";
 
@@ -28,12 +29,19 @@ const { data: page } = await loadQuery({
   visualEditingEnabled
 });
 
+// el slug existe pero la pagina no tiene absolutamente nada.
+const blankPage = page || {
+  heading: "Título de la página", // Valor por defecto para heading
+  subheading: "Subtítulo de la página", // Valor por defecto para subheading
+  pageBuilder: [], // Array vacío por defecto para pageBuilder
+};
+
 // si no hay post y no estamos viendo un borrador
 if (!page && !serverDraftMode) {
   return Astro.redirect('/api/draft-mode/disable');
 }
 
-//console.log("datos de pagina", page);
+console.log("datos de pagina", page);
 
 // si la página no existe, redirigir a un 404
 if (!page) {
@@ -42,6 +50,21 @@ if (!page) {
 ---
 
 <Layout>
-  <h1>{page.heading}</h1>
-  <p>{page.subheading}</p>
+  {Object.keys(blankPage).length === 0 ? ( // Si la pagina no tiene campos
+    <h1>Esta página está vacía. ¡Regresa pronto!</h1>
+  ) : ( // Si la página tiene al menos un campo
+    <>
+      <h1>{page?.heading}</h1>
+      <p>{page?.subheading}</p>
+
+      {page?.pageBuilder?.length > 0 && (
+        <>
+          {page.pageBuilder.map((block) => {
+            const BlockComponent = blockComponents[block._type];
+            return BlockComponent ? <BlockComponent {...block} key={block._key || block._id || index} /> : null;
+          })}
+        </>
+      )}
+    </>
+  )}
 </Layout>
