@@ -1,17 +1,6 @@
 ## mois
 
-# Por hacer:
-
-- pageType
-- metadata
-- seo
-- navbar
-- settingsType
-- mostrar la navbar en todas las pantallas
-- organizar la estructura (myStructure)
-- colores
-
-# importancia
+# trabajando en lo siguiente
 
 - hacer settingstype para incluir campos de metadata y SEO general
 - en settingstype incluir footer, navbar y favicon
