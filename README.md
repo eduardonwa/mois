@@ -2,11 +2,9 @@
 
 # trabajando en lo siguiente
 
-- hacer settingstype para incluir campos de metadata y SEO general
-- en settingstype incluir footer, navbar y favicon
+- en settingstype incluir favicon
 - asegurar visibilidad y edicion de navbar y footer desde cualquier pagina
 - crear una pageType para "index.astro" (sin slug ni booleanos) 
-- crear pageType para rutas dinamicas
 - asegurar que las pageTypes tengan campos para SEO
 
 # menos importancia
