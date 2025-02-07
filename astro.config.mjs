@@ -6,6 +6,7 @@ import react from '@astrojs/react';
 import { visualizer } from "rollup-plugin-visualizer";
 import vercel from '@astrojs/vercel';
 
+// @ts-ignore
 const env = loadEnv(process.env.NODE_ENV, process.cwd(), '');
 
 // https://astro.build/config

@@ -67,21 +67,12 @@ export interface PageSlugProps {
   pageBuilder: BlockComponent[];
 }
 
-interface BlockComponents {
-  callToAction: (props: CallToActionProps) => any;
-  infoSection: (props: InfoSectionProps) => any;
-  link: (props: LinkProps) => any;
-  image: (props: ImageProps) => any; // Añade el tipo para Image
-  block: (props: BlockProps) => any; // Añade el tipo para Block
+// Definición de BlockComponent y BlockBase (sin duplicados)
+interface BlockBase {
+  _type: string;
+  _key?: string;
+  _id?: string;
 }
-
-export const blockComponents: BlockComponents = {
-  callToAction: CallToAction,
-  infoSection: InfoSection,
-  link: Link,
-  image: Image, // Incluye el componente Image
-  block: Block, // Incluye el componente Block
-};
 
 interface BlockComponent extends BlockBase {
   _type: "callToAction" | "infoSection" | "image" | "block";
@@ -91,17 +82,13 @@ interface BlockComponent extends BlockBase {
   block?: Block;
 }
 
-interface BlockBase {
-  _type: string;
-  _key?: string;
-  _id?: string;
-}
-
+// Definición de BlockContent
 interface BlockContent {
   _type: "array";
   of: BlockComponent[];
 }
 
+// Definición de Block, Span, ListItem, Image (sin duplicados)
 interface Block extends BlockBase {
   _type: "block";
   style: "normal" | "h1" | "h2" | "h3" | "h4" | "blockquote";
@@ -111,7 +98,7 @@ interface Block extends BlockBase {
 }
 
 interface Span {
-  _type: "span"; // _type en minúsculas
+  _type: "span";
   text: string;
   marks: string[];
 }
@@ -131,7 +118,7 @@ interface Image extends BlockBase {
   hotspot?: boolean;
 }
 
-// (components/CallToAction.astro)
+// Definición de CallToActionProps, InfoSectionProps (sin duplicados)
 interface CallToActionProps extends BlockBase {
   _type: "callToAction";
   heading?: string;
@@ -140,7 +127,6 @@ interface CallToActionProps extends BlockBase {
   link?: Link;
 }
 
-// (components/InfoSection.astro)
 interface InfoSectionProps extends BlockBase {
   _type: "infoSection";
   heading?: string;
@@ -148,15 +134,39 @@ interface InfoSectionProps extends BlockBase {
   content?: BlockContent;
 }
 
-// (components/Link.astro)
+// Definición de LinkProps
 interface LinkProps {
   link: BaseLink;
   class?: string;
 }
 
+// Definición de PostProps (sin duplicados)
 interface PostProps {
   title?: string;
-  slug: slug;
-  body?: blockContent;
-  perspective: string;
+  slug: { current: string }; // Tipado para slug
+  body?: BlockContent;         // Tipado para body
+  perspective: "published" | "previewDrafts" | string; // Tipado más flexible para perspective
 }
+
+// Definición de BlockComponents (sin duplicados)
+import CallToAction from "./CallToAction.astro"; // Importa los componentes
+import InfoSection from "./InfoSection.astro";
+import Link from "./Link.astro";
+import Image from "./Image.astro";
+import Block from "./Block.astro";
+
+interface BlockComponents {
+  callToAction: (props: CallToActionProps) => JSX.Element;
+  infoSection: (props: InfoSectionProps) => JSX.Element;
+  link: (props: LinkProps) => JSX.Element;
+  image: (props: ImageProps) => JSX.Element;
+  block: (props: BlockProps) => JSX.Element;
+}
+
+export const blockComponents: BlockComponents = {
+  callToAction: CallToAction,
+  infoSection: InfoSection,
+  link: Link,
+  image: Image,
+  block: Block,
+};

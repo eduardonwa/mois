@@ -60,7 +60,7 @@ if (!page) {
       {page?.pageBuilder?.length > 0 && (
         <>
           {page.pageBuilder.map((block: BlockBase) => {
-            const BlockComponent = blockComponents[block._type];
+            const BlockComponent = blockComponents[block._type as keyof typeof blockComponents];
             return BlockComponent ? <BlockComponent {...block} key={block._key || block._id} /> : null;
           })}
         </>
