@@ -2,11 +2,12 @@
 import Link from "@front/components/block/Link.astro";
 
 const { navigation } = Astro.props;
+
 const footerData = navigation && navigation.length > 0 && navigation[0].footer ? navigation[0].footer : [];
 ---
 
 <footer>
-    {footerData.map(footerItem => (
+    {footerData.map((footerItem:FooterItem) => (
         <>
             {footerItem.logoUrl && (
                 <img src={footerItem.logoUrl} alt="Logo">

@@ -9,9 +9,10 @@ interface Props {
     postSlug?: string;
     openInNewTab?: boolean;
   };
+  class?: string;
 }
 
-const { link, ...rest } = Astro.props;
+const { link, ...rest } = Astro.props as Props;
 
 const url = linkResolver(link);
 
