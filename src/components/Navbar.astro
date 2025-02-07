@@ -1,0 +1,13 @@
+---
+const { navigation } = Astro.props;
+
+const navbarData = navigation && navigation.length > 0 && navigation[0].navbar ? navigation[0].navbar : [];
+---
+
+<nav>
+    {navbarData.map(item => (
+        <a href={item.link.slug}>
+            {item.name}
+        </a>
+    ))}
+</nav>

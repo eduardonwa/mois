@@ -7,43 +7,28 @@
 type Link = {
     linkType?: "href" | "page" | "post"; // Tipos de enlace permitidos
     href?: string; // URL directa
-    page?: string; // Página interna
-    post?: string; // Post interno
+    pageSlug?: string; // Página interna
+    postSlug?: string; // Post interno
+    openInNewTab?: boolean;
   };
   
   export function linkResolver(link: Link | undefined): string | null {
-    // Si el link es undefined o null, retornamos null
     if (!link) return null;
-  
-    // Si linkType no está definido pero href sí, asumimos que el tipo es "href"
+    
+    // por defecto "href" si no encuentra un tipo de enlace
     if (!link.linkType && link.href) {
       link.linkType = "href";
     }
   
-    // Resolvemos el enlace basado en el linkType
     switch (link.linkType) {
       case "href":
-        return link.href || null; // Retorna href o null si no está definido
-  
+        return link.href || null;
       case "page":
-        // Verificamos que page esté definido y sea un string
-        if (link.page && typeof link.page === "string") {
-          return `/${link.page}`; // Retorna la ruta de la página
-        }
-        break; // Si no cumple, salimos del case
-  
+        return link.pageSlug ? `/${link.pageSlug}` : null;
       case "post":
-        // Verificamos que post esté definido y sea un string
-        if (link.post && typeof link.post === "string") {
-          return `/posts/${link.post}`; // Retorna la ruta del post
-        }
-        break; // Si no cumple, salimos del case
+        return link.postSlug ? `/post/${link.postSlug}` : null;
   
       default:
-        // Si el linkType no es válido o no está definido, retornamos null
         return null;
     }
-  
-    // Si no se cumple ningún caso, retornamos null
-    return null;
   }

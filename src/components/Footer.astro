@@ -1,0 +1,38 @@
+---
+const { navigation } = Astro.props;
+const footerData = navigation && navigation.length > 0 && navigation[0].footer ? navigation[0].footer : [];
+---
+
+<footer>
+    {footerData.map(footerItem => (
+        <>
+            {footerItem.logoUrl && (
+                <img src={footerItem.logoUrl} alt="Logo">
+            )}
+
+            {footerItem.linkGroups?.map(linkGroup => (
+                <div>
+                    {/* Título para cada grupo de enlaces */}
+                    <h3>{linkGroup.groupTitle}</h3>
+                    <ul>
+                        {linkGroup.links?.map(link => (
+                            <li>
+                                <a
+                                    href={
+                                        link.link.linkType === "page" ? `/${link.link.pageSlug}` :
+                                        link.link.linkType === "post" ? `/post/${link.link.postSlug}` :
+                                        link.link.href || "#"
+                                    }
+                                    target={link.link.openInNewTab ? "_blank" : "_self"}
+                                    rel={link.link.openInNewTab ? "noopener noreferrer" : undefined}
+                                >
+                                    {link.name}
+                                </a>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            ))}
+        </>
+    ))}
+</footer>

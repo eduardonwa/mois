@@ -41,8 +41,6 @@ if (!page && !serverDraftMode) {
   return Astro.redirect('/api/draft-mode/disable');
 }
 
-console.log("datos de pagina", page);
-
 // si la página no existe, redirigir a un 404
 if (!page) {
   return Astro.redirect('/404');

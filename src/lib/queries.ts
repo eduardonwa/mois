@@ -14,6 +14,35 @@ const linkFields = /* groq */ `
   }
 `;
 
+export const navigationQuery = groq`
+  *[_type == "navigation"] {
+    navbar[]{
+      name,
+      link-> {
+        name,
+        "slug": slug.current,
+        ${linkReference}
+      }
+    },
+    footer[] {
+      "logoUrl": logo.asset->url,
+      linkGroups[] {
+        groupTitle,
+        links[] {
+          name,
+          link {
+            linkType,
+            openInNewTab,
+            href,
+            "pageSlug": page->slug.current,
+            "postSlug": post->slug.current
+          }
+        }
+      }
+    }
+  }
+`;
+
 export const pageQuery = groq`
   *[_type == "page" && slug.current == $slug][0] {
     _id,
