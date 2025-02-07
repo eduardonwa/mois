@@ -14,11 +14,17 @@ import Link from "./Link.astro";
 
 <div>
     <h1>{heading}</h1>
-    <Link link={link} class="mi-clase">
-        {buttonText && buttonText}
+
+    <Link 
+        class="mi-clase"
+        link={{  // Pass the object directly as 'link' prop
+            ...link.openInNewTab ? { target: "_blank", rel: "noopener noreferrer" } : {},
+            linkType: link.linkType || "page", // Default to "page" if not provided
+            pageSlug: link.pageSlug,
+            postSlug: link.postSlug,
+            href: link.href, // Include href if needed
+        }}
+    >
+        {buttonText || "Enlace"}
     </Link>
 </div>
-
-<script>
-    console.log("Link data:", link); // Verifica los datos que llegan al componente Link
-</script>

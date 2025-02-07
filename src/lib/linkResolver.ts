@@ -15,7 +15,7 @@ type Link = {
   export function linkResolver(link: Link | undefined): string | null {
     if (!link) return null;
     
-    // por defecto "href" si no encuentra un tipo de enlace
+    // por defecto "href" si no se encuentra un linkType
     if (!link.linkType && link.href) {
       link.linkType = "href";
     }

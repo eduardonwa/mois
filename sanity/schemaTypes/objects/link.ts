@@ -1,5 +1,5 @@
 import {defineField, defineType} from "sanity";
-import {DocumentIcon, LinkIcon} from "@sanity/icons";
+import {LinkIcon} from "@sanity/icons";
 
 export const linkType = defineType({
     name: 'link',

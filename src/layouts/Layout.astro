@@ -1,11 +1,11 @@
 ---
 import { VisualEditing } from "@sanity/astro/visual-editing";
-import { loadQuery } from "../../sanity/lib/load-query";
-import { settingsQuery, navigationQuery } from "../lib/queries";
-import { urlForImage } from "../../sanity/lib/url-for-image"
+import { loadQuery } from "@back/lib/load-query";
+import { urlForImage } from "@back/lib/url-for-image"
+import { settingsQuery, navigationQuery } from "@front/lib/queries";
 
-import Navbar from "../components/Navbar.astro";
-import Footer from "../components/Footer.astro";
+import Navbar from "@front/components/Navbar.astro";
+import Footer from "@front/components/Footer.astro";
 
 const visualEditingEnabled =
   import.meta.env.PUBLIC_SANITY_VISUAL_EDITING_ENABLED == "true";

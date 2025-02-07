@@ -1,11 +1,11 @@
 import { defineConfig } from "sanity";
 import { structureTool } from "sanity/structure";
-import { schema } from "./sanity/schemaTypes";
 import { presentationTool } from 'sanity/presentation';
-import { resolve } from "./sanity/lib/resolve";
-import {visionTool} from '@sanity/vision'
-import {esESLocale} from '@sanity/locale-es-es'
-import { myStructure } from "./sanity/schemaTypes/structure/deskStructure";
+import { visionTool } from '@sanity/vision'
+import { esESLocale } from '@sanity/locale-es-es'
+import { schema } from "@back/schemaTypes";
+import { resolve } from "@back/lib/resolve";
+import { myStructure } from "@back/schemaTypes/structure/deskStructure";
 
 export default defineConfig({
   projectId: import.meta.env.PUBLIC_SANITY_PROJECT_ID,

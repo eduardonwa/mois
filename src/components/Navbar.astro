@@ -1,13 +1,25 @@
 ---
-const { navigation } = Astro.props;
+import Link from "@front/components/block/Link.astro";
+
+const { navigation = [] } = Astro.props;
 
 const navbarData = navigation && navigation.length > 0 && navigation[0].navbar ? navigation[0].navbar : [];
+console.log("navbar", navbarData)
 ---
 
 <nav>
-    {navbarData.map(item => (
-        <a href={item.link.slug}>
-            {item.name}
-        </a>
-    ))}
+    {navbarData.map((item, index) => {
+        // Construye el objeto `link` para el componente `Link`
+        const resolvedLink = {
+            linkType: "page",
+            pageSlug: item.link.slug,
+            openInNewTab: false,
+        };
+
+        return (
+            <Link key={index} link={resolvedLink}>
+                {item.name}
+            </Link>
+        );
+    })}
 </nav>

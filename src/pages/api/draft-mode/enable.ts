@@ -1,6 +1,6 @@
 import type { APIRoute } from "astro";
 import { validatePreviewUrl } from '@sanity/preview-url-secret';
-import { createSanityClient } from '../../../../sanity/lib/client';
+import { createSanityClient } from '@back/lib/client';
 
 export const GET: APIRoute = async ({ request }) => {
   if (!import.meta.env.SANITY_API_READ_TOKEN) {

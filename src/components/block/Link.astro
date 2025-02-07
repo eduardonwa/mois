@@ -16,10 +16,10 @@ const { link, ...rest } = Astro.props;
 const url = linkResolver(link);
 
 const linkAttributes = {
-     href: url || "#",
-     ...rest, // Esto sobrescribirá target y rel si se proporcionan en rest
-     ...(link.openInNewTab ? { target: "_blank", rel: "noopener noreferrer" } : {}), // agregamos opciones para abrir en una nueva pestaña si el enlace los incluye
-   };
+  href: url || "#",
+  ...rest, // Esto sobrescribirá target y rel si se proporcionan en rest
+  ...(link.openInNewTab ? { target: "_blank", rel: "noopener noreferrer" } : {}), // agregamos opciones para abrir en una nueva pestaña si el enlace los incluye
+};
 ---
 
 <a {...linkAttributes}>

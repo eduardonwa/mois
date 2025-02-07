@@ -1,4 +1,6 @@
 ---
+import Link from "@front/components/block/Link.astro";
+
 const { navigation } = Astro.props;
 const footerData = navigation && navigation.length > 0 && navigation[0].footer ? navigation[0].footer : [];
 ---
@@ -17,17 +19,17 @@ const footerData = navigation && navigation.length > 0 && navigation[0].footer ?
                     <ul>
                         {linkGroup.links?.map(link => (
                             <li>
-                                <a
-                                    href={
-                                        link.link.linkType === "page" ? `/${link.link.pageSlug}` :
-                                        link.link.linkType === "post" ? `/post/${link.link.postSlug}` :
-                                        link.link.href || "#"
-                                    }
-                                    target={link.link.openInNewTab ? "_blank" : "_self"}
-                                    rel={link.link.openInNewTab ? "noopener noreferrer" : undefined}
+                                <Link
+                                    link={{
+                                        linkType: link.link.linkType,
+                                        href: link.link.href,
+                                        pageSlug: link.link.pageSlug,
+                                        postSlug: link.link.postSlug,
+                                        openInNewTab: link.link.openInNewTab,
+                                    }}
                                 >
                                     {link.name}
-                                </a>
+                                </Link>
                             </li>
                         ))}
                     </ul>
