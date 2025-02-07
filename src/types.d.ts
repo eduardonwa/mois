@@ -2,11 +2,11 @@
 interface NavbarItem {
     name: string;
     label: string;
-    link: {  // Este objeto link *debe* tener la forma que espera la interfaz Link
-      slug: string; // "slug" aquí, no "pageSlug"
-      href?: string; // Si necesitas href para los navlinks, inclúyelo aquí
+    link: { 
+      slug: string;
+      href?: string;
     };
-    pageSlug?: string; // Si necesitas pageSlug fuera del objeto link, puedes dejarlo
+    pageSlug?: string;
 }
 
 interface NavLink {
