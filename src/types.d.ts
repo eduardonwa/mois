@@ -153,3 +153,10 @@ interface LinkProps {
   link: BaseLink;
   class?: string;
 }
+
+interface PostProps {
+  title?: string;
+  slug: slug;
+  body?: blockContent;
+  perspective: string;
+}

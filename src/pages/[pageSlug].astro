@@ -24,7 +24,7 @@ export async function getStaticPaths() {
 
 const {pageSlug} = Astro.params;
 
-const { data: page }: { data: PageSlugProps } = await loadQuery({
+const { data: page  }= await loadQuery<PageSlugProps>({
   query: pageQuery,
   params: { slug: pageSlug },
   perspective: serverDraftMode ? "previewDrafts" : "published",

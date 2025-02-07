@@ -1,5 +1,7 @@
 ---
 import type { SanityDocument } from "@sanity/client";
+import type { PostProps } from "@front/types";
+
 import { loadQuery } from "@back/lib/load-query";
 import { postQuery } from '@front/lib/queries';
 import { isDraftMode } from "@front/lib/draftMode";
@@ -24,7 +26,7 @@ export async function getStaticPaths() {
   });
 }
 
-const { data: post, perspective  } = await loadQuery({
+const { data: post, perspective } = await loadQuery<PostProps>({
   query: postQuery,
   params: { slug: Astro.params.slug },
   perspective: serverDraftMode ? "previewDrafts" : "published",
