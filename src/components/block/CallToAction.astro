@@ -15,16 +15,16 @@ import Link from "./Link.astro";
 <div>
     <h1>{heading}</h1>
 
-    <Link 
-        class="mi-clase"
-        link={{  // Pass the object directly as 'link' prop
-            ...link.openInNewTab ? { target: "_blank", rel: "noopener noreferrer" } : {},
-            linkType: link.linkType || "page", // Default to "page" if not provided
-            pageSlug: link.pageSlug,
-            postSlug: link.postSlug,
-            href: link.href, // Include href if needed
+    <Link
+        link={{
+            linkType: link?.linkType,
+            href: link?.href,
+            pageSlug: link?.page,
+            postSlug: link?.post,
+            openInNewTab: link?.openInNewTab,
         }}
+        class="mi-clase"
     >
-        {buttonText || "Enlace"}
+        {buttonText && buttonText}
     </Link>
 </div>

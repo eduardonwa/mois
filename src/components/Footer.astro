@@ -1,5 +1,6 @@
 ---
 import Link from "@front/components/block/Link.astro";
+import type { FooterItem } from "@front/types";
 
 const { navigation } = Astro.props;
 
@@ -22,12 +23,13 @@ const footerData = navigation && navigation.length > 0 && navigation[0].footer ?
                             <li>
                                 <Link
                                     link={{
-                                        linkType: link.link.linkType,
-                                        href: link.link.href,
-                                        pageSlug: link.link.pageSlug,
-                                        postSlug: link.link.postSlug,
-                                        openInNewTab: link.link.openInNewTab,
+                                        linkType: link.link?.linkType,
+                                        href: link.link?.href,
+                                        pageSlug: link.link?.pageSlug,
+                                        postSlug: link.link?.postSlug,
+                                        openInNewTab: link.link?.openInNewTab,
                                     }}
+                                    class="mi-clase"
                                 >
                                     {link.name}
                                 </Link>

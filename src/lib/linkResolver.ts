@@ -10,7 +10,7 @@ type Link = {
     pageSlug?: string; // Página interna
     postSlug?: string; // Post interno
     openInNewTab?: boolean;
-  };
+};
   
   export function linkResolver(link: Link | undefined): string | null {
     if (!link) return null;
@@ -29,6 +29,6 @@ type Link = {
         return link.postSlug ? `/post/${link.postSlug}` : null;
   
       default:
-        return null;
+        return link.href || null;
     }
   }

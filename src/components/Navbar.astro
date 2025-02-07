@@ -1,5 +1,6 @@
 ---
 import Link from "@front/components/block/Link.astro";
+import type { NavbarItem } from "@front/types";
 
 const { navigation = [] } = Astro.props;
 
@@ -7,20 +8,14 @@ const navbarData: NavbarItem[] = navigation && navigation.length > 0 && navigati
 ---
 
 <nav>
-    {navbarData.map((item, index) => {
-        // Construye el objeto `link` para el componente `Link`
-        const resolvedLink = {
-            link: {
+    {navbarData.map((item) => (
+        <Link
+            link={{
                 linkType: "page",
-                pageSlug: item.link.slug,
-                href: item.link.href || undefined,
-            },
-        };
-
-        return (
-            <Link key={index} link={resolvedLink}>
-                {item.name}
-            </Link>
-        );
-    })}
+                pageSlug: item.link?.slug,
+            }}
+        >
+            {item.link.name}
+        </Link>
+    ))}
 </nav>

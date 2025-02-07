@@ -1,5 +1,7 @@
 ---
 import type { SanityDocument } from "@sanity/client";
+import type { PageSlugProps, BlockBase } from "@front/types";
+
 import { loadQuery } from "@back/lib/load-query";
 import { pageQuery } from "@front/lib/queries";
 import { isDraftMode } from "@front/lib/draftMode";
@@ -22,7 +24,7 @@ export async function getStaticPaths() {
 
 const {pageSlug} = Astro.params;
 
-const { data: page } = await loadQuery({
+const { data: page }: { data: PageSlugProps } = await loadQuery({
   query: pageQuery,
   params: { slug: pageSlug },
   perspective: serverDraftMode ? "previewDrafts" : "published",
@@ -31,9 +33,9 @@ const { data: page } = await loadQuery({
 
 // el slug existe pero la pagina no tiene absolutamente nada.
 const blankPage = page || {
-  heading: "Título de la página", // Valor por defecto para heading
-  subheading: "Subtítulo de la página", // Valor por defecto para subheading
-  pageBuilder: [], // Array vacío por defecto para pageBuilder
+  heading: "Título de la página",
+  subheading: "Subtítulo de la página",
+  pageBuilder: [],
 };
 
 // si no hay post y no estamos viendo un borrador
@@ -57,9 +59,9 @@ if (!page) {
 
       {page?.pageBuilder?.length > 0 && (
         <>
-          {page.pageBuilder.map((block) => {
+          {page.pageBuilder.map((block: BlockBase) => {
             const BlockComponent = blockComponents[block._type];
-            return BlockComponent ? <BlockComponent {...block} key={block._key || block._id || index} /> : null;
+            return BlockComponent ? <BlockComponent {...block} key={block._key || block._id} /> : null;
           })}
         </>
       )}

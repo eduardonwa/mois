@@ -6,11 +6,12 @@ import { settingsQuery, navigationQuery } from "@front/lib/queries";
 
 import Navbar from "@front/components/Navbar.astro";
 import Footer from "@front/components/Footer.astro";
+import type { MetadataSettingsProps } from "@front/types";
 
 const visualEditingEnabled =
   import.meta.env.PUBLIC_SANITY_VISUAL_EDITING_ENABLED == "true";
 
-const { data: settings  } = await loadQuery({
+const { data: settings  }: { data: MetadataSettingsProps[] } = await loadQuery({
 	query: settingsQuery,
 	params: {},
 });
