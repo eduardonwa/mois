@@ -1,28 +1,20 @@
-import { defineField, defineType } from "sanity";
+import {defineField, defineType, type Rule} from "sanity";
 
-export const settingsType = defineType({
-    name: 'settings',
-    type: 'document',
-    title: 'Configuración',
-    preview: {
-        prepare() {
-            return {
-                title: 'Configuración',
-            }
-        },
-    },
+export const pageMetadataType = defineType({
+    name: 'pageMetadata',
+    type: 'object',
     fields: [
         defineField({
             name: 'title',
             type: 'string',
-            title: 'Título del sitio'
+            title: 'Título',
+            validation: (rule) => rule.max(60).error('El máximo de caracteres es hasta 60.'),
         }),
-        // favicon
         defineField({
             name: 'description',
             type: 'text',
-            title: 'Descripción para el sitio',
-            description: 'Se utiliza para la etiqueta de descripción <meta> para SEO.'
+            title: 'Descripción',
+            validation: (rule) => rule.max(160).error('El máximo de caracteres es hasta 160.'),
         }),
         defineField({
             name: 'ogImage',
@@ -54,6 +46,5 @@ export const settingsType = defineType({
                 })
             ],
         }),
-
     ]
 });

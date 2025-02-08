@@ -9,6 +9,7 @@ import { linkType } from "./objects/link";
 import { callToActiontype } from "./objects/callToAction";
 import { pageType } from "./documents/page";
 import { infoSectionType } from "./objects/infoSection";
+import { pageMetadataType } from "./objects/pageMetadata";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
     types: [
@@ -25,5 +26,6 @@ export const schema: { types: SchemaTypeDefinition[] } = {
         linkType,
         callToActiontype,
         infoSectionType,
+        pageMetadataType,
     ]
 };

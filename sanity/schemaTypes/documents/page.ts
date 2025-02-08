@@ -5,6 +5,12 @@ export const pageType = defineType({
     name: 'page',
     type: 'document',
     title: 'Páginas',
+    groups: [
+        {
+            name: 'metaSeo',
+            title: 'Metadata (SEO)'
+        },
+    ],
     icon: DocumentIcon,
     fields: [
         defineField({
@@ -55,5 +61,11 @@ export const pageType = defineType({
                 },
             },
         }),
+        defineField({
+            name: 'pageMetadata',
+            type: 'pageMetadata',
+            title: 'Metadata para la página',
+            group: 'metaSeo',
+        })
     ],
 });

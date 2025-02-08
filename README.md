@@ -2,7 +2,6 @@
 
 # trabajando en lo siguiente
 
-- en settingstype incluir favicon
 - asegurar visibilidad y edicion de navbar y footer desde cualquier pagina
 - crear una pageType para "index.astro" (sin slug ni booleanos) 
 - asegurar que las pageTypes tengan campos para SEO
@@ -18,3 +17,7 @@
 # por hacer
 
 - si se elige otro tipo de enlace en link, asegurar que se borre el anterior. por ejemplo: antes el enlace era una URL y después se eligió "page". borrar los campos anteriores para limpiar la solicitud. en caso de que no se pueda, mostrar un aviso para borrar el campo. 
+
+# para despues
+
+- generar favicon desde el estudio
