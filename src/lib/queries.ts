@@ -13,7 +13,6 @@ const linkFields = /* groq */ `
     ${linkReference}
   }
 `;
-
 export const navigationQuery = groq`
   *[_type == "navigation"] {
     navbar[]{
@@ -43,6 +42,21 @@ export const navigationQuery = groq`
   }
 `;
 
+export const pageMetadataQuery = groq`
+*[_type == "page" && slug.current == $slug][0] {
+  pageMetadata,
+  ...,
+  pageMetadata {
+    title,
+    description,
+    ogImage {
+      alt,
+      baseUrl,
+      "ogImageUrl": asset->url
+    },
+  }
+}`;
+
 export const pageQuery = groq`
   *[_type == "page" && slug.current == $slug][0] {
     _id,
@@ -68,7 +82,6 @@ export const pageQuery = groq`
     },
   }
 `;
-
 export const postQuery = groq`
   *[_type == "post" && slug.current == $slug][0] {
     title,
@@ -96,7 +109,6 @@ export const postQuery = groq`
     }
   }
 `;
-
 export const settingsQuery = groq`
   *[_type == "settings"] {
     title,

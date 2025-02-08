@@ -2,8 +2,7 @@
 import { VisualEditing } from "@sanity/astro/visual-editing";
 import { loadQuery } from "@back/lib/load-query";
 import { urlForImage } from "@back/lib/url-for-image"
-import { settingsQuery, navigationQuery } from "@front/lib/queries";
-
+import { settingsQuery, navigationQuery, pageMetadataQuery } from "@front/lib/queries";
 import Navbar from "@front/components/Navbar.astro";
 import Footer from "@front/components/Footer.astro";
 import type { MetadataSettingsProps } from "@front/types";
@@ -11,35 +10,51 @@ import type { MetadataSettingsProps } from "@front/types";
 const visualEditingEnabled =
   import.meta.env.PUBLIC_SANITY_VISUAL_EDITING_ENABLED == "true";
 
-const { data: settings  }: { data: MetadataSettingsProps[] } = await loadQuery({
-	query: settingsQuery,
-	params: {},
-});
-
 const { data: navigation  } = await loadQuery({
 	query: navigationQuery,
 	params: {},
 });
 
+let pageMeta = null;
+let settings = null;
+
+if (Astro.params.pageSlug) {
+  const { data } = await loadQuery({
+    query: pageMetadataQuery,
+    params: { slug: Astro.params.pageSlug }
+  });
+  pageMeta = data?.pageMetadata;
+} else {
+  const { data: settingsData } = await loadQuery<MetadataSettingsProps>({
+    query: settingsQuery,
+    params: {}
+  });
+  settings = settingsData?.[0];
+  console.log("estas viendo la metadata global:", settingsData);
+}
+
 const metadata = {
-    title: settings[0].title || "",
-    description: settings[0].description || "",
-    ogImage: settings[0]?.ogImage
-		? {
-			alt: settings[0].ogImage.alt || "",
-			baseUrl: settings[0].ogImage.baseUrl || "",
-			url: settings[0].ogImage.ogImageUrl
-				? urlForImage(settings[0].ogImage.ogImageUrl)
-					.width(1200)
-					.height(627)
-					.fit("crop")
-					.url()
-				: "/public/404.png",
-		} : {
-			alt: "Imagen por defecto",
-			url: "/public/404.png",
-		}
+  title: pageMeta?.title || settings?.title || "",
+  description: pageMeta?.description || settings?.description || "",
+  ogImage: pageMeta?.ogImage || settings?.ogImage
+    ? {
+      alt: pageMeta?.ogImage.alt || settings.ogImage.alt || "",
+      baseUrl: pageMeta?.ogImage.baseUrl || settings.ogImage.baseUrl || "",
+      url: pageMeta?.ogImage.ogImageUrl || settings?.ogImage.ogImageUrl
+        ? urlForImage(pageMeta?.ogImage.ogImageUrl || settings.ogImage.ogImageUrl)
+          .width(1200)
+          .height(627)
+          .fit("crop")
+          .url()
+        : "/public/404.png",
+    }
+    : {
+      alt: "Imagen por defecto",
+      url: "/public/404.png",
+    },
 };
+
+console.log("estas viendo la metadata de la pagina actual:", metadata)
 ---
 
 <!doctype html>
