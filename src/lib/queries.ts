@@ -57,14 +57,32 @@ export const pageMetadataQuery = groq`
   }
 }`;
 
+export const pageIndexQuery = groq`
+  *[_type == "pageIndex"] {
+    "pageBuilder": pageBuilder[]{
+      ...,
+      _type == "callToAction" => {
+        ${linkFields},
+      },
+      _type == "infoSection" => {
+        content[] {
+          ...,
+          markDefs[]{
+            ...,
+            ${linkReference}
+          },
+        }
+      },
+    }
+  }
+`;
+
 export const pageQuery = groq`
   *[_type == "page" && slug.current == $slug][0] {
     _id,
     _type,
     name,
     slug,
-    heading,
-    subheading,
     "pageBuilder": pageBuilder[]{
       ...,
       _type == "callToAction" => {

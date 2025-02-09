@@ -3,21 +3,28 @@ import { VisualEditing } from "@sanity/astro/visual-editing";
 import { loadQuery } from "@back/lib/load-query";
 import { urlForImage } from "@back/lib/url-for-image"
 import { settingsQuery, navigationQuery, pageMetadataQuery } from "@front/lib/queries";
+import { isDraftMode } from "@front/lib/draftMode";
 import Navbar from "@front/components/Navbar.astro";
 import Footer from "@front/components/Footer.astro";
 import type { MetadataSettingsProps } from "@front/types";
 
+const serverDraftMode = isDraftMode(Astro.request);
 const visualEditingEnabled =
   import.meta.env.PUBLIC_SANITY_VISUAL_EDITING_ENABLED == "true";
 
 const { data: navigation  } = await loadQuery({
 	query: navigationQuery,
 	params: {},
+	perspective: serverDraftMode ? "previewDrafts" : "published",
+  	visualEditingEnabled
 });
 
 let pageMeta = null;
 let settings = null;
 
+// cargar datos metadata segun la página.
+// si estamos en "/" utilizar "settingsData"
+// si estamos en una pagina con un slug, utilizar "pageMeta"
 if (Astro.params.pageSlug) {
   const { data } = await loadQuery({
     query: pageMetadataQuery,
@@ -30,9 +37,9 @@ if (Astro.params.pageSlug) {
     params: {}
   });
   settings = settingsData?.[0];
-  console.log("estas viendo la metadata global:", settingsData);
 }
 
+// datos metadata que se muestran en redes sociales o en el html final
 const metadata = {
   title: pageMeta?.title || settings?.title || "",
   description: pageMeta?.description || settings?.description || "",
@@ -53,8 +60,6 @@ const metadata = {
       url: "/public/404.png",
     },
 };
-
-console.log("estas viendo la metadata de la pagina actual:", metadata)
 ---
 
 <!doctype html>
@@ -81,7 +86,7 @@ console.log("estas viendo la metadata de la pagina actual:", metadata)
 	<body>
 		<Navbar navigation={navigation}/>
 
-		<slot />
+		<slot serverDraftMode={serverDraftMode} visualEditingEnabled={visualEditingEnabled}/>
 		<VisualEditing enabled={visualEditingEnabled} />
 		
 		<Footer navigation={navigation}/>

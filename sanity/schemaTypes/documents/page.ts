@@ -30,17 +30,6 @@ export const pageType = defineType({
             },
         }),
         defineField({
-            name: 'heading',
-            type: 'string',
-            title: 'Encabezado',
-            validation: (rule) => rule.required(),
-        }),
-        defineField({
-            name: 'subheading',
-            type: 'string',
-            title: 'Subencabezado',
-        }),
-        defineField({
             name: 'pageBuilder',
             type: 'array',
             title: 'Constructor de página',

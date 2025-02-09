@@ -1,16 +1,13 @@
 ---
 import type { SanityDocument } from "@sanity/client";
 import type { PageSlugProps, BlockBase } from "@front/types";
-
 import { loadQuery } from "@back/lib/load-query";
 import { pageQuery } from "@front/lib/queries";
-import { isDraftMode } from "@front/lib/draftMode";
 import { blockComponents } from "@front/components/block";
 
 import Layout from "../layouts/Layout.astro";
 
-const serverDraftMode = isDraftMode(Astro.request);
-const visualEditingEnabled = import.meta.env.PUBLIC_SANITY_VISUAL_EDITING_ENABLED === "true";
+const { serverDraftMode, visualEditingEnabled } = Astro.props;
 
 export async function getStaticPaths() {
   const { data: pages } = await loadQuery<SanityDocument[]>({
@@ -22,7 +19,7 @@ export async function getStaticPaths() {
   }));
 }
 
-const {pageSlug} = Astro.params;
+const { pageSlug } = Astro.params;
 
 const { data: page } = await loadQuery<PageSlugProps>({
   query: pageQuery,
@@ -54,9 +51,6 @@ if (!page) {
     <h1>Esta página está vacía. ¡Regresa pronto!</h1>
   ) : ( // Si la página tiene al menos un campo
     <>
-      <h1>{page?.heading}</h1>
-      <p>{page?.subheading}</p>
-
       {page?.pageBuilder?.length > 0 && (
         <>
           {page.pageBuilder.map((block: BlockBase) => {

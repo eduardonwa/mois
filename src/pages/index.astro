@@ -1,11 +1,27 @@
 ---
-import Welcome from '@front/components/Welcome.astro';
+import { loadQuery } from '@back/lib/load-query';
+import { pageIndexQuery } from '@front/lib/queries';
 import Layout from '@front/layouts/Layout.astro';
+import type { PageSlugProps, BlockBase } from "@front/types";
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const { serverDraftMode, visualEditingEnabled } = Astro.props;
+
+const { data: pageIndex } = await loadQuery<PageSlugProps>({
+	query: pageIndexQuery,
+	params: {},
+	perspective: serverDraftMode ? "previewDrafts" : "published",
+  	visualEditingEnabled
+});
+
+console.log(JSON.stringify(pageIndex, null, 2))
 ---
 
 <Layout>
-	<Welcome />
+	{pageIndex?.pageBuilder?.length > 0 && (
+		<>
+			{pageIndex.pageBuilder.map((block: Block) => {
+				return <p>Bloque: {block._type}</p>; // Prueba simple
+			})}
+		</>
+	)}
 </Layout>

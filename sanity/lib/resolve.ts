@@ -15,7 +15,7 @@ export const resolve: PresentationPluginOptions["resolve"] = {
             href: "/",
           },
         ],
-        message: "Accede a Configuración desde el menu lateral para editar su metadata.",
+        message: "Accede a la información metadata desde \"Configuración\".",
         tone: "positive",
       })
     }),

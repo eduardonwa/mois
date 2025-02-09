@@ -62,6 +62,7 @@ export interface SanityAsset {
 }
 
 export interface PageSlugProps {
+[x: string]: any;
   heading: string;
   subheading: string;
   pageBuilder: BlockComponent[];

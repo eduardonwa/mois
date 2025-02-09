@@ -1,16 +1,12 @@
 ---
 import type { SanityDocument } from "@sanity/client";
 import type { PostProps } from "@front/types";
-
 import { loadQuery } from "@back/lib/load-query";
 import { postQuery } from '@front/lib/queries';
-import { isDraftMode } from "@front/lib/draftMode";
-
 import PortableText from "@front/components/PortableText.astro";
 import Layout from "@front/layouts/Layout.astro";
 
-const serverDraftMode = isDraftMode(Astro.request);
-const visualEditingEnabled = import.meta.env.PUBLIC_SANITY_VISUAL_EDITING_ENABLED === "true";
+const { serverDraftMode, visualEditingEnabled } = Astro.props;
 
 export async function getStaticPaths() {
   const { data: posts } = await loadQuery<SanityDocument[]>({
