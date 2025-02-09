@@ -10,11 +10,13 @@ import { callToActiontype } from "./objects/callToAction";
 import { pageType } from "./documents/page";
 import { infoSectionType } from "./objects/infoSection";
 import { pageMetadataType } from "./objects/pageMetadata";
+import { pageIndexType } from "./documents/pageIndex";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
     types: [
         // singletons
         settingsType,
+        pageIndexType,
         // documents
         authorType,
         categoryType,

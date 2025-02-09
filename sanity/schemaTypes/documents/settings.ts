@@ -7,7 +7,7 @@ export const settingsType = defineType({
     preview: {
         prepare() {
             return {
-                title: 'Configuración',
+                title: 'Configuración general',
             }
         },
     },

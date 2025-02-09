@@ -14,6 +14,7 @@ export const pageMetadataType = defineType({
             name: 'description',
             type: 'text',
             title: 'Descripción',
+            description: 'Se utiliza para la etiqueta de descripción <meta> para SEO.',
             validation: (rule) => rule.max(160).error('El máximo de caracteres es hasta 160.'),
         }),
         defineField({

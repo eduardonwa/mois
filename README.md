@@ -2,9 +2,7 @@
 
 # trabajando en lo siguiente
 
-- asegurar visibilidad y edicion de navbar y footer desde cualquier pagina
 - crear una pageType para "index.astro" (sin slug ni booleanos) 
-- asegurar que las pageTypes tengan campos para SEO
 
 # menos importancia
 
@@ -21,3 +19,4 @@
 # para despues
 
 - generar favicon desde el estudio
+- crear componente astro para el head con variables metadata

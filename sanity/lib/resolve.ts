@@ -4,6 +4,22 @@ import type { PresentationPluginOptions } from "sanity/presentation";
 export const resolve: PresentationPluginOptions["resolve"] = {
   locations: {
     // Add more locations for other post types
+    pageIndex: defineLocations({
+      select: {
+        name: 'name',
+      },
+      resolve: (doc) => ({
+        locations: [
+          {
+            title: doc?.name || 'Página principal',
+            href: "/",
+          },
+        ],
+        message: "Accede a Configuración desde el menu lateral para editar su metadata.",
+        tone: "positive",
+      })
+    }),
+    
     page: defineLocations({
       select: {
         title: "name",
@@ -27,7 +43,7 @@ export const resolve: PresentationPluginOptions["resolve"] = {
       resolve: (doc) => ({
         locations: [
           {
-            title: doc?.title || "Navbar",
+            title: doc?.title || "Navegación",
             href: doc?.slug || "/",
           },
         ],
@@ -63,7 +79,7 @@ export const resolve: PresentationPluginOptions["resolve"] = {
             href: doc?.slug || "/",
           },
         ],
-        message: "Esta configuración se utiliza en todas las páginas.",
+        message: "Información metadata para la página principal.",
         tone: "positive",
       }),
     }),

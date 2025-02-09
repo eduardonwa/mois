@@ -17,7 +17,7 @@ export const myStructure: StructureResolver = (S) =>
                 .child(
                     S.documentList()
                         .title('Todas las páginas')
-                        .filter('_type == "page"')
+                        .filter('_type in ["pageIndex", "page"]')
                 ),
                 S.divider(),
             // todos los articulos
@@ -64,12 +64,12 @@ export const myStructure: StructureResolver = (S) =>
                 S.divider(),
             // configuracion general del sitio
             S.listItem()
-                .title('Configuración del sitio')
+                .title('Configuración')
                 .icon(CogIcon)
                 .child(
                     S.list()
                     // titulo para la lista dentro de configuracion
-                    .title('Documentos de la configuración')
+                    .title('Configuración general')
                     // lista de documentos
                     .items([
                         S.listItem()
@@ -91,7 +91,8 @@ export const myStructure: StructureResolver = (S) =>
                         'post',
                         'author',
                         'category',
-                        'page'
+                        'page',
+                        'pageIndex'
                     ].includes(listItem.getId())            
                 ),
     ])
