@@ -58,7 +58,7 @@ export const pageMetadataQuery = groq`
 }`;
 
 export const pageIndexQuery = groq`
-  *[_type == "pageIndex"] {
+  *[_type == "pageIndex"][0] {
     "pageBuilder": pageBuilder[]{
       ...,
       _type == "callToAction" => {

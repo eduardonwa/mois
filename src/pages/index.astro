@@ -3,6 +3,7 @@ import { loadQuery } from '@back/lib/load-query';
 import { pageIndexQuery } from '@front/lib/queries';
 import Layout from '@front/layouts/Layout.astro';
 import type { PageSlugProps, BlockBase } from "@front/types";
+import { blockComponents } from "@front/components/block";
 
 const { serverDraftMode, visualEditingEnabled } = Astro.props;
 
@@ -13,15 +14,15 @@ const { data: pageIndex } = await loadQuery<PageSlugProps>({
   	visualEditingEnabled
 });
 
-console.log(JSON.stringify(pageIndex, null, 2))
 ---
 
 <Layout>
 	{pageIndex?.pageBuilder?.length > 0 && (
 		<>
-			{pageIndex.pageBuilder.map((block: Block) => {
-				return <p>Bloque: {block._type}</p>; // Prueba simple
-			})}
+			{pageIndex.pageBuilder.map((block: BlockBase) => {
+            const BlockComponent = blockComponents[block._type as keyof typeof blockComponents];
+            return BlockComponent ? <BlockComponent {...block} key={block._key || block._id} /> : null;
+          })}
 		</>
 	)}
 </Layout>
