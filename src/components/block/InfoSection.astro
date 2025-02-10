@@ -1,2 +1,17 @@
 ---
+import PortableText from "../PortableText.astro";
+
+const {
+    heading = "",
+    subheading = "",
+    content = [],
+} = Astro.props;
+
+console.log(Astro.props)
 ---
+
+<div>
+    <h1>{heading && heading}</h1>
+    <p>{subheading && subheading}</p>
+    <PortableText portableText={content} />
+</div>

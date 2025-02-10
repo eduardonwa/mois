@@ -9,7 +9,7 @@ export const pageIndexType = defineType({
             name: 'name',
             type: 'string',
             title: 'Nombre',
-            initialValue: 'Página principal'
+            initialValue: 'Página principal',
         }),
         defineField({
             name: 'pageBuilder',
@@ -33,5 +33,4 @@ export const pageIndexType = defineType({
             },
         }),
     ],
-    description: 'Esta es tu página principal. Los datos metadata de esta página se configuran desde "Configuración" desde el menú lateral'
 });
