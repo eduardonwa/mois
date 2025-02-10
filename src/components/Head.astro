@@ -1,0 +1,69 @@
+---
+import { settingsQuery, pageMetadataQuery } from "@front/lib/queries";
+import { urlForImage } from "@back/lib/url-for-image"
+import { loadQuery } from "@back/lib/load-query";
+import type { MetadataSettingsProps, PageMetadata } from "@front/types";
+
+let pageMeta: PageMetadata | null = null;
+let settings: MetadataSettingsProps | null = null;
+
+// cargar metadata segun la página.
+// si estamos en "/" utilizar "settingsData"
+// si estamos en una pagina con un slug, utilizar "pageMeta"
+if (Astro.params.pageSlug) {
+  const { data } = await loadQuery<{pageMetadata: PageMetadata}>({
+    query: pageMetadataQuery,
+    params: { slug: Astro.params.pageSlug }
+  });
+  pageMeta = data?.pageMetadata;
+} else {
+  const { data: settingsData } = await loadQuery<{settings: MetadataSettingsProps}>({
+    query: settingsQuery,
+    params: {}
+  });
+  // @ts-ignore
+  settings = settingsData?.[0] || null;
+}
+
+// datos metadata que se muestran en redes sociales o en el html final
+const metadata = {
+  title: pageMeta?.title || settings?.title || "",
+  description: pageMeta?.description || settings?.description || "",
+  ogImage: pageMeta?.ogImage || settings?.ogImage
+    ? {
+      alt: pageMeta?.ogImage?.alt || settings?.ogImage?.alt || "",
+      baseUrl: pageMeta?.ogImage?.baseUrl || settings?.ogImage?.baseUrl || "",
+      url: pageMeta?.ogImage?.ogImageUrl || (settings?.ogImage?.ogImageUrl ?? {_type: 'reference', asset: {_ref: '' }})
+        ? urlForImage(pageMeta?.ogImage?.ogImageUrl || (settings?.ogImage?.ogImageUrl ?? {_type: 'reference', asset: {_ref: ''}}))
+          .width(1200)
+          .height(627)
+          .fit("crop")
+          .url()
+        : "/public/404.png",
+    } 
+    : {
+      alt: "Imagen por defecto",
+      url: "/public/404.png",
+    },
+};
+---
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="title" content={metadata.title}>
+    <meta name="description" content={metadata.description}>
+    {metadata.ogImage && (
+        <link rel="canonical" href={metadata.ogImage.baseUrl}>
+        <meta property="og:url" content={metadata.ogImage.baseUrl}>
+        <meta property="og:image" content={metadata.ogImage.url}>
+        <meta property="og:image:alt" content={metadata.ogImage.alt}>
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="627">
+    )}
+    <meta property="og:title" content={metadata.title}>
+    <meta property="og:description" content={metadata.description}>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Astro Basics</title>
+</head>

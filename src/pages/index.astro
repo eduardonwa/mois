@@ -1,9 +1,9 @@
 ---
 import { loadQuery } from '@back/lib/load-query';
 import { pageIndexQuery } from '@front/lib/queries';
+import { blockComponents } from "@front/components/block";
 import Layout from '@front/layouts/Layout.astro';
 import type { PageSlugProps, BlockBase } from "@front/types";
-import { blockComponents } from "@front/components/block";
 
 const { serverDraftMode, visualEditingEnabled } = Astro.props;
 
@@ -13,7 +13,6 @@ const { data: pageIndex } = await loadQuery<PageSlugProps>({
 	perspective: serverDraftMode ? "previewDrafts" : "published",
   	visualEditingEnabled
 });
-
 ---
 
 <Layout>

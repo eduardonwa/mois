@@ -1,4 +1,9 @@
 import type { array, arrayOutputType } from "astro:schema";
+import CallToAction from "./CallToAction.astro";
+import InfoSection from "./InfoSection.astro";
+import Link from "./Link.astro";
+import Image from "./Image.astro";
+import Block from "./Block.astro";
 
 // Definición base para enlaces
 interface BaseLink {
@@ -50,6 +55,17 @@ export interface MetadataSettingsProps {
     alt: string;
     baseUrl: string;
     ogImageUrl: SanityAsset;
+  };
+}
+
+interface PageMetadata {
+  [key: string]: unknown; // Firma de índice más segura (o usa un tipo más específico si conoces la estructura)
+  title?: string;
+  description?: string;
+  ogImage?: {
+    alt?: string;
+    baseUrl?: string;
+    ogImageUrl?: SanityAsset;
   };
 }
 
@@ -149,13 +165,6 @@ interface PostProps {
   perspective: "published" | "previewDrafts" | string; // Tipado más flexible para perspective
 }
 
-// Definición de BlockComponents (sin duplicados)
-import CallToAction from "./CallToAction.astro"; // Importa los componentes
-import InfoSection from "./InfoSection.astro";
-import Link from "./Link.astro";
-import Image from "./Image.astro";
-import Block from "./Block.astro";
-
 interface BlockComponents {
   callToAction: (props: CallToActionProps) => JSX.Element;
   infoSection: (props: InfoSectionProps) => JSX.Element;
@@ -171,3 +180,33 @@ export const blockComponents: BlockComponents = {
   image: Image,
   block: Block,
 };
+
+interface Props {
+  serverDraftMode: boolean;
+  visualEditingEnabled: boolean;
+  page: PageMetadata | null; // Tipado para page, puede ser null
+  settings: MetadataSettingsProps | null;
+  metadata: { 
+    title: string; 
+    description: string; 
+    ogImage: { 
+      alt: string; 
+      baseUrl: string; 
+      ogImageUrl: any;
+    } | { 
+      alt: string; 
+      url: string; 
+    }; 
+  };
+  navigation: any; // Tipa navigation también
+}
+
+interface LayoutProps {
+  serverDraftMode: boolean;
+  visualEditingEnabled: boolean;
+  // ... otras props que necesites (page, settings, metadata, etc.)
+  page: any; // Tipa page
+  settings: any; // Tipa settings
+  metadata: any; // Tipa metadata
+  navigation: any; // Tipa navigation
+}

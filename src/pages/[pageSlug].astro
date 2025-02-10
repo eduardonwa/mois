@@ -34,7 +34,6 @@ const blankPage = page || {
   subheading: "Subtítulo de la página",
   pageBuilder: [],
 };
-
 // si no hay post y no estamos viendo un borrador
 if (!page && !serverDraftMode) {
   return Astro.redirect('/api/draft-mode/disable');
