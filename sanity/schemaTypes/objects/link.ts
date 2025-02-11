@@ -67,5 +67,18 @@ export const linkType = defineType({
             title: 'Abrir en una pestaña nueva',
             initialValue: false
        })
-    ]
+    ],
+    validation: (rule) =>
+        rule.custom((fields) => {
+            if (!fields) return true;
+
+            const { linkType, href, page, post } = fields;
+            const selectedFields = [href, page, post].filter(Boolean);
+
+            if (selectedFields.length > 1) {
+                return 'Parece que ya tenías un enlace guardado. Borra el anterior para continuar.';
+            }
+
+            return true;
+        }),
 });

@@ -15,7 +15,7 @@ export const resolve: PresentationPluginOptions["resolve"] = {
             href: "/",
           },
         ],
-        message: "Esta es tu página principal. Edita la metadata (SEO) en \"Configuración > Metadata\"",
+        message: "Esta es tu página principal. Edita la metadata en \"Configuración > Metadata\"",
         tone: "positive",
       })
     }),
