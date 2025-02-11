@@ -1,0 +1,41 @@
+---
+import { loadQuery } from "@back/lib/load-query";
+import { allPostsQuery } from "@front/lib/queries";
+import type { Post } from "@front/types";
+import Layout from "@front/layouts/Layout.astro"
+
+const { serverDraftMode, visualEditingEnabled } = Astro.props;
+
+const { data } = await loadQuery<Post[]>({
+  query: allPostsQuery,
+  params: { },
+  perspective: serverDraftMode ? "previewDrafts" : "published",
+  visualEditingEnabled
+});
+
+const allPosts = data;
+---
+
+<Layout>
+    {allPosts && allPosts.length > 0 ? (
+        allPosts.map((post: Post) => (
+            <div>
+                <a href={`/post/${post.slug}`}>
+                    <h3>{post.title}</h3>
+                    <p>Autor: {post.author}</p>
+                    {post.mainImage?.url &&
+                        <img
+                            src={post.mainImage.url}
+                            alt={post.mainImage.alt || post.title}
+                        />
+                    }
+                    {post.categories?.map((category) => (
+                        <p>{category}</p>
+                    ))}
+                </a>
+            </div>
+        ))
+    ) : (
+        <p>No hay posts disponibles.</p>
+    )}
+</Layout>

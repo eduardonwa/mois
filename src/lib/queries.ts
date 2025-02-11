@@ -135,6 +135,22 @@ export const postQuery = groq`
     }
   }
 `;
+
+export const allPostsQuery = groq`
+  *[_type == "post"] {
+    title,
+    _createdAt,
+    _updatedAt,
+    "author": author->name,
+    "slug": slug.current,
+    "mainImage": {
+      "url": mainImage.asset->url,
+      "alt": mainImage.alt
+    },
+    "categories": categories[]->title,
+  }
+`;
+
 export const settingsQuery = groq`
   *[_type == "settings"] {
     title,

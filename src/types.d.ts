@@ -165,6 +165,24 @@ interface PostProps {
   perspective: "published" | "previewDrafts" | string; // Tipado más flexible para perspective
 }
 
+// definicion del backend para los post
+export interface Post {
+  title: string;
+  slug: string;
+  author: string;
+  mainImage?: {
+    url: string;
+    alt?: string;
+  };
+  categories: string[];
+  publishedAt?: string;
+  body: BlockContent;
+  _createdAt: string;
+  _updatedAt: string;
+  _id: string;
+  _type: string;
+}
+
 interface BlockComponents {
   callToAction: (props: CallToActionProps) => JSX.Element;
   infoSection: (props: InfoSectionProps) => JSX.Element;
