@@ -69,7 +69,15 @@ export const pageIndexQuery = groq`
           ...,
           markDefs[]{
             ...,
-            ${linkReference}
+            _type == "link" => {
+              "link": link {
+                linkType,
+                openInNewTab,
+                href,
+                "pageSlug": page->slug.current,
+                "postSlug": post->slug.current,
+              }
+            }
           },
         }
       },

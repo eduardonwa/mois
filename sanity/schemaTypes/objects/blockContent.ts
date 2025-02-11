@@ -42,14 +42,14 @@ export const blockContentType = defineType({
         // Annotations can be any object structure – e.g. a link or a footnote.
         annotations: [
           {
-            title: "URL",
             name: "link",
             type: "object",
+            title: "Enlace",
             fields: [
               {
-                title: "URL",
-                name: "href",
-                type: "url",
+                name: "link",
+                type: "link",
+                title: "Enlace",
               },
             ],
           },
