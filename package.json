@@ -26,7 +26,8 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "sanity": "^3.72.1",
-    "sanity-plugin-asset-source-unsplash": "^3.0.3"
+    "sanity-plugin-asset-source-unsplash": "^3.0.3",
+    "sass": "^1.84.0"
   },
   "devDependencies": {
     "rollup-plugin-visualizer": "^5.14.0",
