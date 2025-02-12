@@ -5,9 +5,20 @@ import type { NavbarItem } from "@front/types";
 const { navigation = [] } = Astro.props;
 
 const navbarData: NavbarItem[] = navigation && navigation.length > 0 && navigation[0].navbar ? navigation[0].navbar : [];
+const navLogo = navigation.length > 0 ? navigation[0].navLogo : null;
 ---
 
 <nav>
+    {navLogo && (
+        <img
+            src={navLogo}
+            alt="Logo de la empresa"
+            width="150"
+            height="auto"
+            loading="lazy"
+        />
+    )}
+
     {navbarData.map((item) => (
         <Link
             link={{

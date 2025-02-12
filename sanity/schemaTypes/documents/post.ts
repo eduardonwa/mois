@@ -8,10 +8,12 @@ export const postType = defineType({
     defineField({
       name: "title",
       type: "string",
+      title: "Título",
     }),
     defineField({
       name: "slug",
       type: "slug",
+      title: "Enlace",
       options: {
         source: "title",
         maxLength: 96,
@@ -20,11 +22,13 @@ export const postType = defineType({
     defineField({
       name: "author",
       type: "reference",
+      title: "Autor",
       to: { type: "author" },
     }),
     defineField({
       name: "mainImage",
       type: "image",
+      title: "Imagen",
       options: {
         hotspot: true,
       },
@@ -32,22 +36,25 @@ export const postType = defineType({
         {
           name: "alt",
           type: "string",
-          title: "Alternative Text",
+          title: "Texto alternativo",
         },
       ],
     }),
     defineField({
       name: "categories",
       type: "array",
+      title: "Categoría",
       of: [{ type: "reference", to: { type: "category" } }],
     }),
     defineField({
       name: "publishedAt",
       type: "datetime",
+      title: "Fecha de publicación",
     }),
     defineField({
       name: "body",
       type: "blockContent",
+      title: "Contenido",
     }),
   ],
 

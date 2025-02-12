@@ -6,6 +6,7 @@ import { esESLocale } from '@sanity/locale-es-es'
 import { schema } from "@back/schemaTypes";
 import { resolve } from "@back/lib/resolve";
 import { myStructure } from "@back/schemaTypes/structure/deskStructure";
+import { unsplashAssetSource } from "sanity-plugin-asset-source-unsplash";
 
 export default defineConfig({
   projectId: import.meta.env.PUBLIC_SANITY_PROJECT_ID,
@@ -29,5 +30,18 @@ export default defineConfig({
     visionTool(),
     esESLocale(),
   ],
+  form: {
+    image: {
+      assetSources: (prev) => [...prev, unsplashAssetSource],
+      directUploads: true,
+    },
+  },
+  datasets: {
+    production: {
+      image: {
+        metadata: ["dimensions"],
+      },
+    },
+  },
   schema,
 });

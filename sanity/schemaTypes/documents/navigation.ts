@@ -1,6 +1,6 @@
 import { defineField, defineType } from "sanity";
-import {LinkIcon} from '@sanity/icons'
-import {CubeIcon} from '@sanity/icons'
+import { LinkIcon } from '@sanity/icons'
+import { CubeIcon } from '@sanity/icons'
 
 export const navigationType = defineType({
     name: 'navigation',
@@ -14,6 +14,39 @@ export const navigationType = defineType({
         },
     },
     fields: [
+        defineField({
+            name: 'logo',
+            type: 'image',
+            title: 'Logo',
+            description: 'Tamaño permitido: 300px de ancho por 150px de alto.',
+            options: { hotspot: true },
+            validation: (Rule) =>
+                Rule.custom(async (image, context) => {
+                    if (!image?.asset?._ref) return true; // Si no hay imagen, permitir
+        
+                    const client = context.getClient({ apiVersion: "2025-01-28" });
+                    try {
+                        const asset = await client.fetch(
+                            `*[_id == $id][0]{metadata}`,
+                            { id: image.asset._ref }
+                        );
+        
+                        if (!asset?.metadata?.dimensions) {
+                            return 'No se pudieron obtener las dimensiones de la imagen.';
+                        }
+        
+                        const { width, height } = asset.metadata.dimensions;
+        
+                        if (width > 300 || height > 150) {
+                            return `La imagen es demasiado grande. Tamaño actual: ${width}x${height} píxeles.`;
+                        }
+        
+                        return true;
+                    } catch (error) {
+                        return 'Error al obtener los datos de la imagen.';
+                    }
+                }),
+        }),                             
         defineField({
             name: 'navbar',
             type: 'array',
@@ -121,7 +154,7 @@ export const navigationType = defineType({
                             const groupTitles = groups
                                 ? groups
                                     .slice(0, 3)
-                                    .map((group) => group.groupTitle)
+                                    .map((group: { groupTitle: any; }) => group.groupTitle)
                                     .join(', ')
                                 : 'Sin grupos';
 

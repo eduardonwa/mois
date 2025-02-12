@@ -2,24 +2,49 @@
 const {
     heading = "",
     subheading = "",
+    buttonText = "",
+    imagenUrl = "",
     link = {},
-    buttonText = ""
 } = Astro.props;
 
 import Link from "./Link.astro";
+
+// crear la imagen a un objeto (asi lo tengo en mi query)
+const image = typeof imagenUrl === "string" 
+    ? { url: imagenUrl, alt: Astro.props.image?.alt || "Imagen sin descripción" } 
+    : imagenUrl;
 ---
 
 <style>
-    .mi-clase {
+    .boton {
         background-color: black;
         padding: 14px;
         color: white;
+    }
+
+    .img-wrapper {
+        width: 500px;
+
+        .imagen {
+            width: 100%;
+        }
     }
 </style>
 
 <div>
     <h1>{heading}</h1>
     <p>{subheading}</p>
+
+    <div class="img-wrapper">
+        {image?.url && (
+            <img
+                class="imagen"
+                src={image.url}
+                alt={image.alt || "Imagen"}
+            />
+        )}
+    </div>
+
     <Link
         link={{
             linkType: link?.linkType,
@@ -28,7 +53,7 @@ import Link from "./Link.astro";
             postSlug: link?.post,
             openInNewTab: link?.openInNewTab,
         }}
-        class="mi-clase"
+        class="boton"
     >
         {buttonText && buttonText}
     </Link>

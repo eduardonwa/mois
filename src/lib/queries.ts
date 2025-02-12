@@ -15,6 +15,7 @@ const linkFields = /* groq */ `
 `;
 export const navigationQuery = groq`
   *[_type == "navigation"] {
+    "navLogo": logo.asset->url,
     navbar[]{
       name,
       link-> {
@@ -63,6 +64,10 @@ export const pageIndexQuery = groq`
       ...,
       _type == "callToAction" => {
         ${linkFields},
+        "imagenUrl": {
+          "url": image.asset->url,
+          "alt": image.alt,
+        },
       },
       _type == "infoSection" => {
         content[] {
@@ -95,6 +100,7 @@ export const pageQuery = groq`
       ...,
       _type == "callToAction" => {
         ${linkFields},
+        "imagenUrl": image.asset->url
       },
       _type == "infoSection" => {
         content[] {
