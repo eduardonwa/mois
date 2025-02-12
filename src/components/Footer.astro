@@ -7,37 +7,43 @@ const { navigation } = Astro.props;
 const footerData = navigation && navigation.length > 0 && navigation[0].footer ? navigation[0].footer : [];
 ---
 
-<footer>
-    {footerData.map((footerItem:FooterItem) => (
-        <>
-            {footerItem.logoUrl && (
-                <img src={footerItem.logoUrl} alt="Logo">
-            )}
-
-            {footerItem.linkGroups?.map(linkGroup => (
-                <div>
-                    {/* Título para cada grupo de enlaces */}
-                    <h3>{linkGroup.groupTitle}</h3>
-                    <ul>
-                        {linkGroup.links?.map(link => (
-                            <li>
-                                <Link
-                                    link={{
-                                        linkType: link.link?.linkType,
-                                        href: link.link?.href,
-                                        pageSlug: link.link?.pageSlug,
-                                        postSlug: link.link?.postSlug,
-                                        openInNewTab: link.link?.openInNewTab,
-                                    }}
-                                    class="mi-clase"
-                                >
-                                    {link.name}
-                                </Link>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-            ))}
-        </>
-    ))}
+<footer class="site-footer">
+    <div class="even-columns padding-4">
+        {footerData.map((footerItem:FooterItem) => (
+            <>
+                {footerItem.logoUrl && (
+                    /* wrapper para footer logo */
+                    <a href="/" class="mx-auto" style="height: 250px;">
+                        <img style="height: 100%;" src={footerItem.logoUrl} alt="Logo">
+                    </a>
+                )}
+    
+                {footerItem.linkGroups?.map(linkGroup => (
+                    /* aqui empiezan los grupos de enlaces */
+                    <div class="grid-auto-fill mx-auto" style="--height: fit-content;">
+                        {/* Título para cada grupo */}
+                        <h3 class="fs-500 fw-bold">{linkGroup.groupTitle}</h3>
+                        <ul class="flow">
+                            {/* grupo de enlaces */}
+                            {linkGroup.links?.map(link => (
+                                <li class="no-list-style">
+                                    <Link
+                                        link={{
+                                            linkType: link.link?.linkType,
+                                            href: link.link?.href,
+                                            pageSlug: link.link?.pageSlug,
+                                            postSlug: link.link?.postSlug,
+                                            openInNewTab: link.link?.openInNewTab,
+                                        }}
+                                    >
+                                        {link.name}
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                ))}
+            </>
+        ))}
+    </div>
 </footer>

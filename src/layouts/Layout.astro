@@ -3,10 +3,10 @@ import { VisualEditing } from "@sanity/astro/visual-editing";
 import { loadQuery } from "@back/lib/load-query";
 import { isDraftMode } from "@front/lib/draftMode";
 import { navigationQuery } from "@front/lib/queries";
-
 import Head from "@front/components/Head.astro";
 import Navbar from "@front/components/Navbar.astro";
 import Footer from "@front/components/Footer.astro";
+import '@front/styles/main.scss';
 
 const serverDraftMode = isDraftMode(Astro.request);
 

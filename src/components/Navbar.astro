@@ -5,28 +5,90 @@ import type { NavbarItem } from "@front/types";
 const { navigation = [] } = Astro.props;
 
 const navbarData: NavbarItem[] = navigation && navigation.length > 0 && navigation[0].navbar ? navigation[0].navbar : [];
+
+// Función para limpiar valores
+function cleanValue(value: string) {
+    return value.replace(/[\u200B-\u200D\uFEFF\u00A0]/g, '');
+}
+
+const navCoords = navigation && navigation.length > 0 ? {
+    logoPosition: cleanValue(navigation[0].logoPosition || "start"),
+    logoAlign: cleanValue(navigation[0].logoAlign || "end"),
+    linksPosition: cleanValue(navigation[0].linksPosition || "center"),
+    linksAlign: cleanValue(navigation[0].linksAlign || "start"),
+} : {
+    logoPosition: "start",
+    logoAlign: "end",
+    linksPosition: "center",
+    linksAlign: "start",
+};
+
 const navLogo = navigation.length > 0 ? navigation[0].navLogo : null;
 ---
 
-<nav>
-    {navLogo && (
-        <img
-            src={navLogo}
-            alt="Logo de la empresa"
-            width="150"
-            height="auto"
-            loading="lazy"
-        />
-    )}
+<style>
+    .grid {
+        display: grid;
+        align-items: center;
+        gap: 2rem;
+        grid-auto-flow: row; /* para que queden acomodadas horizontalmente */
+        grid-template-areas: 
+        "start center end"; /* el objetivo es que ambos logo y links esten sobre la misma linea */
+    }
 
-    {navbarData.map((item) => (
-        <Link
-            link={{
-                linkType: "page",
-                pageSlug: item.link?.slug,
-            }}
-        >
-            {item.link.name}
-        </Link>
-    ))}
+    .logo {
+        grid-area: var(--logo-grid-area, start);
+        display: flex;
+        justify-content: var(--logo-justify-content, end);
+    }
+
+    .links {
+        grid-area: var(--links-grid-area, center);
+        display: flex;
+        justify-content: var(--links-justify-content, end);
+    }
+</style>
+
+<nav class="site-header | grid" style="width: 100%;">
+    <!-- logo -->
+    <article
+        class="logo"
+        style={`
+            --logo-grid-area: ${navCoords.logoPosition};
+            --logo-justify-content: ${navCoords.logoAlign};
+        `}
+    >
+        {navLogo && (
+            <a href="/">
+                <img
+                    src={navLogo}
+                    alt="Logo de la empresa"
+                    width="150"
+                    height="auto"
+                    loading="lazy"
+                />
+            </a>
+        )}
+    </article>
+
+    <!-- páginas -->
+    <article
+        class="site-header__inner | links"
+        style={`
+            --links-grid-area: ${navCoords.linksPosition};
+            --links-justify-content: ${navCoords.linksAlign};
+        `}
+    >
+        {navbarData.map((item) => (
+            <Link
+                class="clr-accent-100 no-underline"
+                link={{
+                    linkType: "page",
+                    pageSlug: item.link?.slug,
+                }}
+            >
+                {item.link.name}
+            </Link>
+        ))}
+    </article>
 </nav>

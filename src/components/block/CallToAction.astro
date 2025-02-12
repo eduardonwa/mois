@@ -16,14 +16,9 @@ const image = typeof imagenUrl === "string"
 ---
 
 <style>
-    .boton {
-        background-color: black;
-        padding: 14px;
-        color: white;
-    }
-
     .img-wrapper {
-        width: 500px;
+        width: fit-content;
+        max-width: 610px;
 
         .imagen {
             width: 100%;
@@ -31,9 +26,11 @@ const image = typeof imagenUrl === "string"
     }
 </style>
 
-<div>
-    <h1>{heading}</h1>
-    <p>{subheading}</p>
+<div class="container section flow">
+    <header>
+        <h1 class="heading-1">{heading}</h1>
+        <p class="fs-600">{subheading}</p>
+    </header>
 
     <div class="img-wrapper">
         {image?.url && (
@@ -53,7 +50,8 @@ const image = typeof imagenUrl === "string"
             postSlug: link?.post,
             openInNewTab: link?.openInNewTab,
         }}
-        class="boton"
+        class="button"
+        data-type="accent"
     >
         {buttonText && buttonText}
     </Link>

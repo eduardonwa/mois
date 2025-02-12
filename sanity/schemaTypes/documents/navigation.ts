@@ -46,7 +46,37 @@ export const navigationType = defineType({
                         return 'Error al obtener los datos de la imagen.';
                     }
                 }),
-        }),                             
+        }),
+        defineField({
+            name: 'logoPosition',
+            type: 'string',
+            title: 'Posición del logo',
+            description: 'Selecciona la posición del logo en la navegación.',
+            options: {
+                list: [
+                    {title: 'Inicio', value: 'start'},
+                    {title: 'Centro', value: 'center'},
+                    {title: 'Final', value: 'end'},
+                ],
+                layout: 'radio',
+            },
+            initialValue: 'start',
+        }),
+        defineField({
+            name: 'logoAlign',
+            type: 'string',
+            title: 'Alineación interna del logo',
+            description: 'Selecciona cómo se alinea el logo dentro de su contenedor.',
+            options: {
+                list: [
+                    {title: 'Inicio', value: 'start'},
+                    {title: 'Centro', value: 'center'},
+                    {title: 'Final', value: 'end'},
+                ],
+                layout: 'radio',
+            },
+            initialValue: 'end',
+        }),
         defineField({
             name: 'navbar',
             type: 'array',
@@ -71,6 +101,36 @@ export const navigationType = defineType({
                     ]
                 }
             ],
+        }),
+        defineField({
+            name: 'linksPosition',
+            type: 'string',
+            title: 'Posición de los enlaces',
+            description: 'Selecciona la posición de los enlaces de navegación.',
+            options: {
+                list: [
+                    {title: 'Inicio', value: 'start'},
+                    {title: 'Centro', value: 'center'},
+                    {title: 'Final', value: 'end'},
+                ],
+                layout: 'radio',
+            },
+            initialValue: 'center',
+        }),
+        defineField({
+            name: 'linksAlign',
+            type: 'string',
+            title: 'Alineación interna de los enlaces',
+            description: 'Selecciona cómo se alinean los enlaces dentro de su contenedor.',
+            options: {
+                list: [
+                    {title: 'Inicio', value: 'start'},
+                    {title: 'Centro', value: 'center'},
+                    {title: 'Final', value: 'end'},
+                ],
+                layout: 'radio',
+            },
+            initialValue: 'end'
         }),
         defineField({
             name: 'footer',

@@ -15,6 +15,10 @@ const linkFields = /* groq */ `
 `;
 export const navigationQuery = groq`
   *[_type == "navigation"] {
+    logoPosition,
+    logoAlign,
+    linksPosition,
+    linksAlign,
     "navLogo": logo.asset->url,
     navbar[]{
       name,

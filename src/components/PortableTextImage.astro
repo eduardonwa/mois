@@ -22,7 +22,7 @@ const webpUrl = urlForImage(imageObject)
   .url();
 ---
 
-<picture>
+<picture style="width: 350px;">
   <source srcset={webpUrl} type="image/webp" />
-  <img class="responsive__img" src={url} alt={alt} />
+  <img style="width:100%;" src={url} alt={alt} />
 </picture>

@@ -1,0 +1,8 @@
+@use "../abstracts/" as *;
+
+.grid-auto-fill {
+    display: grid;
+    gap: var(--grid-gap, $grid-gap);
+    grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
+    height: var(--height);
+}

@@ -8,12 +8,14 @@ const {
 } = Astro.props;
 ---
 
-<div>
-    <h1>{heading && heading}</h1>
-    <p>{subheading && subheading}</p>
+<div class="container section flow">
+    <header>
+        <h1 class="heading-2">{heading && heading}</h1>
+        <p class="fs-500 fw-bold">{subheading && subheading}</p>
+    </header>
     
     {content && content.length > 0 ? (
-        <div>
+        <div class="fs-500">
             <PortableText portableText={content} />
         </div>
     ) : null}
