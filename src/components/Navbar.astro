@@ -1,33 +1,31 @@
 ---
-import Link from "@front/components/block/Link.astro";
+import { cleanValue } from "@front/lib/cleanValue";
 import type { NavbarItem } from "@front/types";
+import Link from "@front/components/block/Link.astro";
 
 const { navigation = [] } = Astro.props;
 
 const navbarData: NavbarItem[] = navigation && navigation.length > 0 && navigation[0].navbar ? navigation[0].navbar : [];
 
-// Función para limpiar valores
-function cleanValue(value: string) {
-    return value.replace(/[\u200B-\u200D\uFEFF\u00A0]/g, '');
-}
+const {
+    logoPosition = "start",
+    logoAlign = "end",
+    linksPosition = "center",
+    linksAlign = "start",
+} = navigation && navigation.length > 0 ? navigation[0] : {};
 
-const navCoords = navigation && navigation.length > 0 ? {
-    logoPosition: cleanValue(navigation[0].logoPosition || "start"),
-    logoAlign: cleanValue(navigation[0].logoAlign || "end"),
-    linksPosition: cleanValue(navigation[0].linksPosition || "center"),
-    linksAlign: cleanValue(navigation[0].linksAlign || "start"),
-} : {
-    logoPosition: "start",
-    logoAlign: "end",
-    linksPosition: "center",
-    linksAlign: "start",
-};
+const navCoords = {
+    logoPosition: cleanValue(logoPosition),
+    logoAlign: cleanValue(logoAlign),
+    linksPosition: cleanValue(linksPosition),
+    linksAlign: cleanValue(linksAlign),
+}
 
 const navLogo = navigation.length > 0 ? navigation[0].navLogo : null;
 ---
 
 <style>
-    .grid {
+    .nav-grid {
         display: grid;
         align-items: center;
         gap: 2rem;
@@ -40,6 +38,7 @@ const navLogo = navigation.length > 0 ? navigation[0].navLogo : null;
         grid-area: var(--logo-grid-area, start);
         display: flex;
         justify-content: var(--logo-justify-content, end);
+        
     }
 
     .links {
@@ -49,7 +48,7 @@ const navLogo = navigation.length > 0 ? navigation[0].navLogo : null;
     }
 </style>
 
-<nav class="site-header | grid" style="width: 100%;">
+<nav class="site-header | nav-grid" style="width: 100%;">
     <!-- logo -->
     <article
         class="logo"
@@ -79,16 +78,18 @@ const navLogo = navigation.length > 0 ? navigation[0].navLogo : null;
             --links-justify-content: ${navCoords.linksAlign};
         `}
     >
-        {navbarData.map((item) => (
-            <Link
-                class="clr-accent-100 no-underline"
-                link={{
-                    linkType: "page",
-                    pageSlug: item.link?.slug,
-                }}
-            >
-                {item.link.name}
-            </Link>
-        ))}
+        <div class="links-container">
+            {navbarData.map((item) => (
+                <Link
+                    class="clr-accent-100 no-underline"
+                    link={{
+                        linkType: "page",
+                        pageSlug: item.link?.slug,
+                    }}
+                >
+                    {item.link.name}
+                </Link>
+            ))}
+        </div>
     </article>
 </nav>

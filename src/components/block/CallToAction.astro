@@ -1,4 +1,6 @@
 ---
+import { cleanValue } from "@front/lib/cleanValue";
+
 const {
     heading = "",
     subheading = "",
@@ -9,50 +11,81 @@ const {
 
 import Link from "./Link.astro";
 
+// orden por defecto
+const ctaOrder = new Map([
+    ['heading', 0],
+    ['subheading', 1],
+    ['button', 2],
+    ['image', 3],
+]);
+
+// obtener un orden desde las props o un array vacoí
+const orderArray = Astro.props.order || [];
+
+// mapear el array para obtener el orden correcto (orden tipo array, desde 0)
+const sortedOrder = Object.fromEntries(
+    orderArray.map((key: string, index: any) => [cleanValue(key), index])
+);
+
+// generar el orden final usando `sortedOrder` si existe, sino el orden por defecto
+const finalOrder = {
+    heading: sortedOrder.heading ?? ctaOrder.get('heading'),
+    subheading: sortedOrder.subheading ?? ctaOrder.get('subheading'),
+    button: sortedOrder.button ?? ctaOrder.get('button'),
+    image: sortedOrder.image ?? ctaOrder.get('image'),
+};
+
 // crear la imagen a un objeto (asi lo tengo en mi query)
 const image = typeof imagenUrl === "string" 
     ? { url: imagenUrl, alt: Astro.props.image?.alt || "Imagen sin descripción" } 
     : imagenUrl;
 ---
 
-<style>
-    .img-wrapper {
-        width: fit-content;
-        max-width: 610px;
+<div
+    class="container section flow"
+    data-type="wide"
+>
+    <article class="cta-copy | flow">
+        <h1
+            class="cta-copy__heading | heading-1"
+            style={`order: ${finalOrder.heading};`}
+        >
+            {heading}
+        </h1>
 
-        .imagen {
-            width: 100%;
-        }
-    }
-</style>
+        <p
+            class="cta-copy__subheading | fs-600"
+            style={`order: ${finalOrder.subheading};`}    
+        >
+            {subheading}
+        </p>
 
-<div class="container section flow">
-    <header>
-        <h1 class="heading-1">{heading}</h1>
-        <p class="fs-600">{subheading}</p>
-    </header>
+        <Link
+            link={{
+                linkType: link?.linkType,
+                href: link?.href,
+                pageSlug: link?.page,
+                postSlug: link?.post,
+                openInNewTab: link?.openInNewTab,
+            }}
+            class="cta-link | button"
+            data-type="accent"
+            style={`order: ${finalOrder.button};`}
+        >
+            {buttonText && buttonText}
+        </Link>
 
-    <div class="img-wrapper">
-        {image?.url && (
-            <img
-                class="imagen"
-                src={image.url}
-                alt={image.alt || "Imagen"}
-            />
-        )}
-    </div>
-
-    <Link
-        link={{
-            linkType: link?.linkType,
-            href: link?.href,
-            pageSlug: link?.page,
-            postSlug: link?.post,
-            openInNewTab: link?.openInNewTab,
-        }}
-        class="button"
-        data-type="accent"
-    >
-        {buttonText && buttonText}
-    </Link>
+        <div
+            class="cta-img | img-wrapper"
+            style={`order: ${finalOrder.image};`}
+        >
+            {image?.url && (
+                <img
+                    class="imagen"
+                    src={image.url}
+                    alt={image.alt || "Imagen"}
+                />
+            )}
+        </div>
+    </article>
 </div>

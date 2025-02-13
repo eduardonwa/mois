@@ -1,0 +1,12 @@
+@use "../abstracts" as *;
+
+.cta-copy {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.cta-img {
+    max-width: 610px;
+    margin: auto;
+}

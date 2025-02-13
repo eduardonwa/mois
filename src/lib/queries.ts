@@ -72,6 +72,7 @@ export const pageIndexQuery = groq`
           "url": image.asset->url,
           "alt": image.alt,
         },
+        order,
       },
       _type == "infoSection" => {
         content[] {

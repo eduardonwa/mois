@@ -64,6 +64,25 @@ export const callToActiontype = defineType({
             name: 'link',
             type: 'link',
             title: 'Enlace del botón',
+        }),
+        defineField({
+            name: 'order',
+            type: 'array',
+            title: 'Orden de los elementos',
+            of: [
+                {
+                    type: 'string',
+                    options: {
+                        list: [
+                            {title: 'Encabezado', value: 'heading'},
+                            {title: 'Subtitulo', value: 'subheading'},
+                            {title: 'Botón', value: 'button'},
+                            {title: 'Imagen', value: 'image'},
+                        ],
+                    },
+                },
+            ],
+            initialValue: ['heading', 'subheading', 'button', 'image'],
         })
     ]
 });
