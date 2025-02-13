@@ -4,10 +4,11 @@ import type { PageSlugProps, BlockBase } from "@front/types";
 import { loadQuery } from "@back/lib/load-query";
 import { pageQuery } from "@front/lib/queries";
 import { blockComponents } from "@front/components/block";
-
+import { getDraftModeInfo } from "@front/lib/draftMode";
 import Layout from "../layouts/Layout.astro";
 
-const { serverDraftMode, visualEditingEnabled } = Astro.props;
+const { serverDraftMode, visualEditingEnabled }
+	= getDraftModeInfo(Astro.request);
 
 export async function getStaticPaths() {
   const { data: pages } = await loadQuery<SanityDocument[]>({

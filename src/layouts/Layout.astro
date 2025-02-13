@@ -1,17 +1,15 @@
 ---
 import { VisualEditing } from "@sanity/astro/visual-editing";
 import { loadQuery } from "@back/lib/load-query";
-import { isDraftMode } from "@front/lib/draftMode";
+import { getDraftModeInfo } from "@front/lib/draftMode";
 import { navigationQuery } from "@front/lib/queries";
 import Head from "@front/components/Head.astro";
 import Navbar from "@front/components/Navbar.astro";
 import Footer from "@front/components/Footer.astro";
 import '@front/styles/main.scss';
 
-const serverDraftMode = isDraftMode(Astro.request);
-
-const visualEditingEnabled =
-  import.meta.env.PUBLIC_SANITY_VISUAL_EDITING_ENABLED == "true";
+const { serverDraftMode, visualEditingEnabled }
+	= getDraftModeInfo(Astro.request);
 
 const { data: navigation  } = await loadQuery({
 	query: navigationQuery,
@@ -27,8 +25,7 @@ const { data: navigation  } = await loadQuery({
 
 	<body>
 		<Navbar navigation={navigation}/>
-		<!-- @ts-ignore -->
-		<slot serverDraftMode={serverDraftMode} visualEditingEnabled={visualEditingEnabled} />
+		<slot />
 		<VisualEditing enabled={visualEditingEnabled} />
 		
 		<Footer navigation={navigation}/>
