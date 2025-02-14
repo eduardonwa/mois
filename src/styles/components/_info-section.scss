@@ -1,0 +1,19 @@
+@use "../abstracts/" as *;
+
+.info-section {
+    margin: $size-4;
+    text-align: center;
+
+    .portable-img {
+        max-width: 320px;
+        margin: auto;
+    }
+
+    @include mq(medium) {
+        text-align: start;
+        
+        .portable-img {
+            margin: 0;
+        }
+    }
+}

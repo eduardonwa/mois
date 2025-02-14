@@ -20,7 +20,7 @@ const footerData = navigation && navigation.length > 0 && navigation[0].footer ?
     
                 {footerItem.linkGroups?.map(linkGroup => (
                     /* aqui empiezan los grupos de enlaces */
-                    <div class="grid-auto-fill mx-auto" style="--height: fit-content;">
+                    <div class="grupo-enlaces | grid-auto-fill" style="--height: fit-content;">
                         {/* Título para cada grupo */}
                         <h3 class="fs-500 fw-bold">{linkGroup.groupTitle}</h3>
                         <ul class="flow">

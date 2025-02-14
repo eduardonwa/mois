@@ -39,7 +39,7 @@ export const callToActiontype = defineType({
             name: 'subheading',
             type: 'text',
             title: 'Subtítulo',
-            validation: (rule) => rule.max(70).error('El subtítulo no puede superar los 70 caracteres.'),
+            validation: (rule) => rule.max(120).error('El subtítulo no puede superar los 120 caracteres.'),
         }),
         defineField({
             name: 'image',

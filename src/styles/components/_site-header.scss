@@ -16,3 +16,32 @@
     }
   }
 }
+
+.nav-grid {
+  display: grid;
+  align-items: center;
+  gap: 2rem;
+  grid-auto-flow: row; /* para que queden acomodadas horizontalmente */
+  grid-template-areas: 
+  "start center end"; /* el objetivo es que ambos logo y links esten sobre la misma linea */
+  
+  .logo {
+    grid-area: var(--logo-grid-area, start);
+    display: flex;
+    justify-content: var(--logo-justify-content, end);
+  }
+  
+  .links {
+    grid-area: var(--links-grid-area, center);
+    display: flex;
+    justify-content: var(--links-justify-content, end);
+
+    .links-container {
+      a {
+        @include mq(medium) {
+          padding-inline: $size-4;
+        }
+      } 
+    }
+  }
+}

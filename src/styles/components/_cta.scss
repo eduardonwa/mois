@@ -4,6 +4,15 @@
     display: flex;
     align-items: center;
     flex-direction: column;
+
+    &__heading {
+        text-align: center;
+    }
+
+    &__subheading {
+        max-width: 60ch;
+        text-align: center;
+    }
 }
 
 .cta-img {
