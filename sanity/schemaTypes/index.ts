@@ -6,11 +6,12 @@ import { postType } from "./documents/post";
 import { settingsType } from "./documents/settings";
 import { navigationType } from "./documents/navigation";
 import { linkType } from "./objects/link";
-import { callToActiontype } from "./objects/callToAction";
+import { callToActionType } from "./objects/callToAction";
 import { pageType } from "./documents/page";
 import { infoSectionType } from "./objects/infoSection";
 import { pageMetadataType } from "./objects/pageMetadata";
 import { pageIndexType } from "./documents/pageIndex";
+import { splitImageType } from "./objects/splitImage";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
     types: [
@@ -26,8 +27,9 @@ export const schema: { types: SchemaTypeDefinition[] } = {
         // objects
         blockContentType,
         linkType,
-        callToActiontype,
+        callToActionType,
         infoSectionType,
         pageMetadataType,
+        splitImageType
     ]
 };

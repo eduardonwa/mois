@@ -18,6 +18,7 @@ export const pageIndexType = defineType({
             of: [
                 {type: 'callToAction'},
                 {type: 'infoSection'},
+                {type: 'splitImage'},
             ],
             options: {
                 insertMenu: {

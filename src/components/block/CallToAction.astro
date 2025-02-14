@@ -1,5 +1,6 @@
 ---
 import { cleanValue } from "@front/lib/cleanValue";
+import Link from "./Link.astro";
 
 const {
     heading = "",
@@ -9,7 +10,6 @@ const {
     link = {},
 } = Astro.props;
 
-import Link from "./Link.astro";
 
 // orden por defecto
 const ctaOrder = new Map([

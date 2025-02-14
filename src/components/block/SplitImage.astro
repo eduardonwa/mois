@@ -1,0 +1,55 @@
+---
+import { urlForImage } from "@back/lib/url-for-image";
+import Link from "./Link.astro";
+import { cleanValue } from "@front/lib/cleanValue";
+
+const {
+    heading = "",
+    subheading = "",
+    image = {},
+    orientation = "",
+    buttonText = "",
+    link = {},
+} = Astro.props;
+
+// obtener la orientación
+const cleanOrientation = cleanValue(Astro.props.orientation);
+
+// Procesar la imagen
+const imageUrl = image?.asset ? urlForImage(image.asset).url() : null;
+const imageAlt = image?.alt || "Imagen sin descripción";
+---
+
+<section class="section container" data-type="">
+    <article class={`split-image ${cleanOrientation}`}>
+      <figure class="split-image__figure">
+        {imageUrl && (
+            <img
+                class="border-radius-1"
+                src={imageUrl}
+                alt={imageAlt}
+                loading="lazy"
+            />
+        )}
+      </figure>
+  
+      <div class="split-image__content | flow">
+        <h2 class="heading-3">{heading}</h2>
+        <p class="fs-600">{subheading}</p>
+        <Link
+            link={{
+                linkType: link?.linkType,
+                href: link?.href,
+                pageSlug: link?.page,
+                postSlug: link?.post,
+                openInNewTab: link?.openInNewTab,
+            }}
+            class="button"
+            data-type="accent"
+            role="button"
+        >
+            {buttonText && buttonText}
+        </Link>
+      </div>
+    </article>
+  </section>

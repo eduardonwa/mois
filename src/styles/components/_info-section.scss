@@ -1,7 +1,7 @@
 @use "../abstracts/" as *;
 
 .info-section {
-    margin: $size-4;
+    padding: $size-4;
     text-align: center;
 
     .portable-img {

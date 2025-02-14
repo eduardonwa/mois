@@ -1,4 +1,4 @@
-import {defineField, defineType, type Rule} from "sanity";
+import {defineField, defineType} from "sanity";
 import {DocumentIcon} from "@sanity/icons";
 
 export const pageType = defineType({
@@ -36,6 +36,7 @@ export const pageType = defineType({
             of: [
                 {type: 'callToAction'},
                 {type: 'infoSection'},
+                {type: 'splitImage'},
             ],
             options: {
                 insertMenu: {

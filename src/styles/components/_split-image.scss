@@ -1,0 +1,70 @@
+@use "../abstracts/" as *;
+
+.split-image {
+    display: flex;
+    align-items: center;
+    gap: $size-4;
+    padding: $size-4;
+    flex: 1;
+
+    @include mq(medium) {
+        gap: $size-10;
+    }
+
+    &__content {
+        flex: 2;
+        height: 100%;
+        width: 100%;
+        font-size: $font-size-500;
+
+        @include mq(medium) {
+            width: 50ch;
+        }
+
+        h2 {
+            font-family: $font-family-accent;
+            font-size: $font-size-700;
+            color: $color-neutral-800;
+        }
+    }
+
+    &__figure {
+        height: 25vh;
+        overflow: hidden;
+        flex: 1;
+        margin: 0;
+        filter: drop-shadow(0px 3px 6px rgba(0, 0, 0, 0.152));
+
+        @include mq(medium) {
+            height: 30vh;
+        }
+
+        img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            aspect-ratio: 1;
+            object-position: center;
+
+            @include mq(medium) {
+                height: 100%;
+            }
+        }
+    }
+}
+
+.imageLeft {
+    flex-direction: column;
+
+    @include mq(medium) {
+        flex-direction: row;
+    }
+}
+
+.imageRight {
+    flex-direction: column;
+
+    @include mq(medium) {
+        flex-direction: row-reverse;
+    }
+}

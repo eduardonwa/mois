@@ -2,7 +2,7 @@ import {defineField, defineType} from "sanity";
 import {BulbOutlineIcon} from "@sanity/icons";
 import { unsplashAssetSource } from "sanity-plugin-asset-source-unsplash";
 
-export const callToActiontype = defineType({
+export const callToActionType = defineType({
     name: 'callToAction',
     type: 'object',
     title: 'Llamado a la acción',

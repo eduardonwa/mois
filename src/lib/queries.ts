@@ -13,6 +13,7 @@ const linkFields = /* groq */ `
     ${linkReference}
   }
 `;
+
 export const navigationQuery = groq`
   *[_type == "navigation"] {
     logoPosition,
@@ -91,6 +92,14 @@ export const pageIndexQuery = groq`
           },
         }
       },
+      _type == "splitImage" => {
+        ...,
+        ${linkFields},
+        image {
+          ...,
+          alt,
+        },
+      },
     }
   }
 `;
@@ -115,6 +124,13 @@ export const pageQuery = groq`
             ${linkReference}
           }
         }
+      },
+      _type == "splitImage" => {
+        ...,
+        image {
+          ...,
+          alt,
+        },
       },
     },
   }
