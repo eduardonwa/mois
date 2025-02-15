@@ -16,10 +16,10 @@
   transition: 275ms ease;
   margin: auto;
 
-  &[data-type="accent"] {
+/*   &[data-type="accent"] {
     background-color: $button-accent-background;
     color: $button-accent-color;
-
+  
     &:is(:hover, :focus) {
       background-color: $button-accent-background-hover;
       color: $button-accent-color-hover;
@@ -34,5 +34,5 @@
       background-color: $button-primary-background-hover;
       color: $button-primary-color-hover;
     }
-  }
+  } */
 }

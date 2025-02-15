@@ -69,14 +69,10 @@ export const splitImageType = defineType({
       hidden: ({ parent }) => !parent?.bgColorYes,
     }),
     defineField({
-        name: 'buttonText',
-        type: 'string',
-        title: 'Texto del botón',
-    }),
-    defineField({
-        name: 'link',
-        type: 'link',
-        title: 'Enlace',
-    }),
+      name: 'button',
+      type: 'array',
+      title: 'Botón',
+      of: [{type: 'button'}]
+    })
   ],
 });

@@ -15,6 +15,7 @@ import { splitImageType } from "./objects/splitImage";
 import { colorPaletteType } from "./objects/colorPalette";
 import { headingType } from "./objects/heading";
 import { subheadingType } from "./objects/subheading";
+import { buttonType } from "./objects/button";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
     types: [
@@ -37,5 +38,6 @@ export const schema: { types: SchemaTypeDefinition[] } = {
         colorPaletteType,
         headingType,
         subheadingType,
+        buttonType,
     ]
 };

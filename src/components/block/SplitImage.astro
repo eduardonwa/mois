@@ -8,9 +8,9 @@ const {
     subheading = {},
     image = {},
     orientation = "",
-    buttonText = "",
     link = {},
     bgColor = {},
+    button = [],
 } = Astro.props;
 
 // obtener la orientación
@@ -25,10 +25,42 @@ const subheadingColorString = subheading.subheadingColor ? extractColor(subheadi
 const headingSizeClass = cleanValue(heading.headingSize) || "heading-3";
 const subheadingSizeClass = cleanValue(subheading.subheadingSize) || "fs-600";
 
+// extraer boton 
+const splitButton = Array.isArray(button) ? button : [];
+
+// extraer los estilos de boton
+//const buttonStyle = splitButton[0]?.buttonStyles?.[0] || {};
+
+const DEFAULT_BG_COLOR = "336, 75%, 60%";
+const DEFAULT_TEXT_COLOR = "0, 0%, 82.5%";
+const DEFAULT_HOVER_COLOR = "312, 75%, 50%";
+const DEFAULT_BORDER_COLOR = "transparent";
+
+const buttonStyles = {
+  colors: [
+    {
+      bgColor: extractColor(splitButton[0]?.buttonStyles?.[0].bgColor) || DEFAULT_BG_COLOR,
+      textColor: extractColor(splitButton[0]?.buttonStyles?.[0].textColor) || DEFAULT_TEXT_COLOR,
+      hoverColor: extractColor(splitButton[0]?.buttonStyles?.[0].hoverColor)|| DEFAULT_HOVER_COLOR ,
+      borderColor: extractColor(splitButton[0]?.buttonStyles?.[0].borderColor) || DEFAULT_BORDER_COLOR,
+    }
+  ],
+  classes: [
+    {
+      borderWidth: splitButton[0]?.buttonStyles?.[0].borderWidth,
+      borderRadius: splitButton[0]?.buttonStyles?.[0].borderRadius,
+      buttonShadowStyle: splitButton[0]?.buttonStyles?.[0].buttonShadowStyle,
+    }
+  ]
+}
+
 // Procesar la imagen
 const imageUrl = image?.asset ? urlForImage(image.asset).url() : null;
 const imageAlt = image?.alt || "Imagen sin descripción";
 ---
+<style>
+
+</style>
 
 <div style={`background-color: hsla(${bgColorString})`}>
   <section class="section container">
@@ -61,21 +93,31 @@ const imageAlt = image?.alt || "Imagen sin descripción";
               {subheading.text}
           </p>
         )}
-        
-        <Link
-            link={{
-                linkType: link?.linkType,
-                href: link?.href,
-                pageSlug: link?.page,
-                postSlug: link?.post,
-                openInNewTab: link?.openInNewTab,
-            }}
-            class="button"
-            data-type="accent"
-            role="button"
-        >
-            {buttonText && buttonText}
-        </Link>
+
+        {splitButton.length > 0 ? (
+          splitButton.map(button => (
+            <Link
+              link={{
+                linkType: button.link?.linkType,
+                href: button.link?.href,
+                pageSlug: button.link?.page,
+                postSlug: button.link?.post,
+                openInNewTab: button.link?.openInNewTab,
+              }}
+              class={`button`}
+              onMouseOver={`this.style.backgroundColor='hsla(${buttonStyles.colors[0].hoverColor}'`}
+              onMouseOut={`this.style.backgroundColor='hsla(${buttonStyles.colors[0].bgColor}'`}
+              style={`
+                background-color: hsla(${buttonStyles.colors[0].bgColor});
+                color: hsla(${buttonStyles.colors[0].textColor});
+              `}
+              role="button"
+            >
+              {button.buttonText && button.buttonText}
+            </Link>
+          ))
+        ) : null}
+
       </div>
     </article>
   </section>

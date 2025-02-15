@@ -110,6 +110,20 @@ export const pageIndexQuery = groq`
           ...,
           alt,
         },
+        button[] {
+          ...,
+          ${linkFields},
+          buttonText,
+          buttonStyles[] {
+            "textColor": textColor.color.hsl,
+            "bgColor": bgColor.color.hsl,
+            "hoverColor": hoverColor.color.hsl,
+            borderWidth,
+            borderRadius,
+            borderColor,
+            buttonShadowStyle,
+          }
+        }
       },
     }
   }
@@ -154,6 +168,20 @@ export const pageQuery = groq`
           ...,
           alt,
         },
+        button[] {
+          ...,
+          ${linkFields},
+          buttonText,
+          buttonStyles[] {
+            "textColor": textColor.color.hsl,
+            "bgColor": bgColor.color.hsl,
+            "hoverColor": hoverColor.color.hsl,
+            borderWidth,
+            borderRadius,
+            borderColor,
+            buttonShadowStyle,
+          }
+        }
       },
     },
   }
