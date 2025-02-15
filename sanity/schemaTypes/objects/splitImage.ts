@@ -8,12 +8,12 @@ export const splitImageType = defineType({
   icon: BlockContentIcon,
   preview: {
     select: {
-      title: 'heading',
+      title: 'heading.heading',
       media: 'image',
     },
     prepare({ title, media }) {
       return {
-        title,
+        title: title || 'Sin título',
         subtitle: 'Texto + imagen',
         media: media ?? BlockContentIcon,
       };
@@ -22,12 +22,12 @@ export const splitImageType = defineType({
   fields: [
     defineField({
       name: 'heading',
-      type: 'string',
-      title: 'Título',
+      type: 'heading',
+      title: 'Encabezado',
     }),
     defineField({
       name: 'subheading',
-      type: 'text',
+      type: 'subheading',
       title: 'Subtítulo',
     }),
     defineField({
@@ -55,6 +55,18 @@ export const splitImageType = defineType({
             { value: 'imageRight', title: 'Imagen a la derecha' },
             ],
         },
+    }),
+    defineField({
+      name: 'bgColorYes',
+      type: 'boolean',
+      title: '¿Deseas agregar un color de fondo?',
+      initialValue: false,
+    }),
+    defineField({
+      name: 'bgColor',
+      type: 'colorPalette',
+      title: 'Define un color de fondo',
+      hidden: ({ parent }) => !parent?.bgColorYes,
     }),
     defineField({
         name: 'buttonText',

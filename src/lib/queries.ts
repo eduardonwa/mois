@@ -94,6 +94,17 @@ export const pageIndexQuery = groq`
       },
       _type == "splitImage" => {
         ...,
+        "bgColor": bgColor.color.hsl,
+        heading {
+          "text": heading,
+          headingSize,
+          "headingColor": color.color.hsl,
+        },
+        subheading {
+          "text": subheading,
+          subheadingSize,
+          "subheadingColor": color.color.hsl,
+        },
         ${linkFields},
         image {
           ...,
@@ -127,6 +138,18 @@ export const pageQuery = groq`
       },
       _type == "splitImage" => {
         ...,
+        "bgColor": bgColor.color.hsl,
+        heading {
+          "text": heading,
+          headingSize,
+          "headingColor": color.color.hsl,
+        },
+        subheading {
+          "text": subheading,
+          subheadingSize,
+          "subheadingColor": color.color.hsl,
+        },
+        ${linkFields},
         image {
           ...,
           alt,
@@ -135,6 +158,7 @@ export const pageQuery = groq`
     },
   }
 `;
+
 export const postQuery = groq`
   *[_type == "post" && slug.current == $slug][0] {
     title,

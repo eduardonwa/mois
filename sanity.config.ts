@@ -7,6 +7,7 @@ import { schema } from "@back/schemaTypes";
 import { resolve } from "@back/lib/resolve";
 import { myStructure } from "@back/schemaTypes/structure/deskStructure";
 import { unsplashAssetSource } from "sanity-plugin-asset-source-unsplash";
+import {colorInput} from '@sanity/color-input'
 
 export default defineConfig({
   projectId: import.meta.env.PUBLIC_SANITY_PROJECT_ID,
@@ -29,6 +30,7 @@ export default defineConfig({
     }),
     visionTool(),
     esESLocale(),
+    colorInput(),
   ],
   form: {
     image: {

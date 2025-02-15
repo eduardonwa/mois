@@ -12,6 +12,9 @@ import { infoSectionType } from "./objects/infoSection";
 import { pageMetadataType } from "./objects/pageMetadata";
 import { pageIndexType } from "./documents/pageIndex";
 import { splitImageType } from "./objects/splitImage";
+import { colorPaletteType } from "./objects/colorPalette";
+import { headingType } from "./objects/heading";
+import { subheadingType } from "./objects/subheading";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
     types: [
@@ -30,6 +33,9 @@ export const schema: { types: SchemaTypeDefinition[] } = {
         callToActionType,
         infoSectionType,
         pageMetadataType,
-        splitImageType
+        splitImageType,
+        colorPaletteType,
+        headingType,
+        subheadingType,
     ]
 };

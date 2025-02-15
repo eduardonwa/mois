@@ -1,26 +1,37 @@
 ---
 import { urlForImage } from "@back/lib/url-for-image";
+import { extractColor, cleanValue } from "@front/lib/utils";
 import Link from "./Link.astro";
-import { cleanValue } from "@front/lib/cleanValue";
 
 const {
-    heading = "",
-    subheading = "",
+    heading = {},
+    subheading = {},
     image = {},
     orientation = "",
     buttonText = "",
     link = {},
+    bgColor = {},
 } = Astro.props;
 
 // obtener la orientación
 const cleanOrientation = cleanValue(Astro.props.orientation);
+
+// Extraer colores
+const bgColorString = extractColor(bgColor);
+const headingColorString = heading.headingColor ? extractColor(heading.headingColor) : "0, 0%, 7.5%";
+const subheadingColorString = subheading.subheadingColor ? extractColor(subheading.subheadingColor) : "0, 0%, 30.2%";
+
+// Valores por defecto
+const headingSizeClass = cleanValue(heading.headingSize) || "heading-3";
+const subheadingSizeClass = cleanValue(subheading.subheadingSize) || "fs-600";
 
 // Procesar la imagen
 const imageUrl = image?.asset ? urlForImage(image.asset).url() : null;
 const imageAlt = image?.alt || "Imagen sin descripción";
 ---
 
-<section class="section container" data-type="">
+<div style={`background-color: hsla(${bgColorString})`}>
+  <section class="section container">
     <article class={`split-image ${cleanOrientation}`}>
       <figure class="split-image__figure">
         {imageUrl && (
@@ -34,8 +45,23 @@ const imageAlt = image?.alt || "Imagen sin descripción";
       </figure>
   
       <div class="split-image__content | flow">
-        <h2 class="heading-3">{heading}</h2>
-        <p class="fs-600">{subheading}</p>
+        {heading && (
+          <h1
+            style={`color: hsla(${headingColorString});`}
+            class={`${headingSizeClass}`}
+          >
+            {heading.text}
+          </h1>
+        )}
+          
+        {subheading && (
+          <p
+            style={`color: hsla(${subheadingColorString});`}
+            class={`${subheadingSizeClass}`}>
+              {subheading.text}
+          </p>
+        )}
+        
         <Link
             link={{
                 linkType: link?.linkType,
@@ -53,3 +79,4 @@ const imageAlt = image?.alt || "Imagen sin descripción";
       </div>
     </article>
   </section>
+</div>
